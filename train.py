@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 from transformers import AutoConfig, AutoModelForTokenClassification
 from model import *
 from evaluation import *
-
+from sklearn.metrics import accuracy_score
 from transformers import AutoTokenizer, T5ForConditionalGeneration,BertModel
 
 
@@ -102,6 +102,7 @@ if __name__ == '__main__':
         model.eval()
         results = []
         labels = []
+        best_accuracy = -np.inf
         for i in tqdm(eval_loader,
                       # mininterval=200
                       ):
@@ -113,9 +114,7 @@ if __name__ == '__main__':
                     labels.append(1)
                 elif 'contradiction' in o:
                     labels.append(2)
-            print(output)
-            print(labels)
-            quit()
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -137,13 +136,13 @@ if __name__ == '__main__':
                 elif 'contradiction' in output_text:
                     results.append(2)
 
-            quit()
+        accuracy = round(accuracy_score(labels,results),2)
 
-        print(f'f1_score: {f1score} at epoch {e}')
+        print(f': accuracy {accuracy} at epoch {e}')
         torch.save({'model': model.state_dict()},
-                   f"checkpoint/{model_name}_epoch{e}_{'freeze' if args.freeze == 1 else 'unfreeze'}.pt")
-        if f1score > best_f1:
-            best_f1 = f1score
+                   f"checkpoint/{model_name}_{accuracy}_epoch{e}.pt")
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
             torch.save({'model': model.state_dict()},
-                       f"checkpoint/best_{model_name}_epoch{e}_f1:{round(best_f1, 3)}_{'freeze' if args.freeze == 1 else 'unfreeze'}.pt")
+                       f"checkpoint/best_{model_name}_epoch{e}_{accuracy}.pt")
             print('saving better checkpoint')
