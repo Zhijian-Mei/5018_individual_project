@@ -65,8 +65,7 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            print(text)
-            quit()
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -98,45 +97,27 @@ if __name__ == '__main__':
 
             if global_step % 100 == 0:
                 print('loss: ', loss.item())
+                break
 
-        f1score = 0
-        count = 0
         model.eval()
         for i in tqdm(eval_loader,
                       # mininterval=200
                       ):
-            text, label = i[0], i[1]
-            print(text)
-            quit()
-            input_encoding = tokenizer.batch_encode_plus(
+            text, output = i[0], i[1]
+
+            input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=max_length,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
             ).to(device)
 
-            logits = model(input_encoding)
-            predicted_token_class_ids = logits.argmax(-1)
-            label = label.tolist()
-            predicted_labels = []
-            for j in range(len(label)):
-                label[j] = [int(it) for it in label[j] if it != -1]
-            for j in range(input_encoding['input_ids'].shape[0]):
-                label_for_char = []
-                for k in range(1, max_length):
-                    if predicted_token_class_ids[j][k] == 1 and input_encoding['attention_mask'][j][k] == 1:
-                        start, end = input_encoding.token_to_chars(j, k)
-                        for position in range(start, end):
-                            label_for_char.append(position)
-                predicted_labels.append(label_for_char)
-            # if len(predicted_labels) != 0:
-            #     print(predicted_labels)
-            for j in range(len(predicted_labels)):
-                f1score += f1(predicted_labels[j], label[j])
-                count += 1
+            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
+            print(outputs)
+            quit()
         f1score = f1score / count
         print(f'f1_score: {f1score} at epoch {e}')
         torch.save({'model': model.state_dict()},
