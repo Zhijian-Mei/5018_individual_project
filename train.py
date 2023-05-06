@@ -8,12 +8,11 @@ from tqdm import tqdm
 from data_util import *
 from torch import nn, cuda
 from torch.utils.data import DataLoader
-from transformers import RobertaModel, RobertaConfig, AutoTokenizer, RobertaForTokenClassification, AutoModel
 from transformers import AutoConfig, AutoModelForTokenClassification
 from model import *
 from evaluation import *
 
-
+from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -67,26 +66,11 @@ if __name__ == '__main__':
     gpu = args.gpu
     device = torch.device(f'cuda:{gpu}' if cuda.is_available() else 'cpu')
 
-    train = pd.read_csv('data/tsd_train.csv')
-    eval = pd.read_csv('data/tsd_trial.csv')
-    test = pd.read_csv('data/tsd_test.csv')
-    # print(train['spans'][1])
-    # print(train['text'][1][train['spans'][1][0]:train['spans'][1][-1]+1])
-
-    print('loading train data')
-    trainSet = get_data(train)
-    print('loading eval data')
-    evalSet = get_data(eval)
-
-    model_name = args.model
+    model_name = 't5-small'
     print(f'Backbone model name: {model_name}')
 
-    # loading model
-    config = AutoConfig.from_pretrained(model_name)
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    internal_model = AutoModel.from_pretrained(model_name).to(device)
-
-    model = RobertaMLP_token(internal_model, config).to(device)
+    tokenizer = AutoTokenizer.from_pretrained("t5-small")
+    model = T5ForConditionalGeneration.from_pretrained("t5-small")
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0001)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
@@ -95,11 +79,10 @@ if __name__ == '__main__':
     #
     # last_hidden_states = outputs.last_hidden_state
     # print(last_hidden_states.shape)
-    max_length = 256
-    trainSet = ToxicDataset(trainSet, tokenizer, max_length)
-    evalSet = ToxicDataset(evalSet, tokenizer, max_length)
-    train_batch_size = args.batch_size
-    eval_batch_size = args.batch_size
+
+    print('loading data')
+    dataset = MyDataset(tokenizer)
+    quit()
     train_loader = DataLoader(trainSet, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(evalSet, batch_size=eval_batch_size)
 
@@ -112,9 +95,12 @@ if __name__ == '__main__':
     global_step = 0
     best_f1 = 0
 
+
     for e in range(epoch):
         model.train()
-        for i in tqdm(train_loader,mininterval=200):
+        for i in tqdm(train_loader,
+                      mininterval=200
+                      ):
             text, label, text_length = i[0], i[1].to(device), i[2]
             input_encoding = tokenizer.batch_encode_plus(
                 text,
