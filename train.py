@@ -1,4 +1,5 @@
 import argparse
+import random
 
 import numpy as np
 import pandas as pd
@@ -135,6 +136,8 @@ if __name__ == '__main__':
                     results.append(1)
                 elif 'contradiction' in output_text:
                     results.append(2)
+                else:
+                    results.append(random.choice([0,1,2]))
 
         accuracy = round(accuracy_score(labels,results),2)
 
