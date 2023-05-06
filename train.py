@@ -100,27 +100,28 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            print(text)
-            print(output)
-            quit()
-            input_encoding = tokenizer.batch_encode_plus(
+            input_ids = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
-            ).to(device)
+            ).input_ids.to(device)
 
-            golden_labels = get_token_labal(input_encoding, label, max_length)
-            # golden_labels = get_char_label(input_encoding,label,text_length)
-            # for j in range(len(golden_labels)):
-            #     print(golden_labels[j])
-            #     print(label[j])
-            # quit()
-            golden_labels = torch.LongTensor(golden_labels).to(device)
-            logits, loss = model(input_encoding, golden_labels)
+            output_ids = tokenizer.batch_encode_plus(
+                output,
+                max_length=256,
+                pad_to_max_length=True,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            ).input_ids.to(device)
 
+            outputs = model(input_ids=input_ids, labels=output_ids)
+            loss = outputs.loss
+            print(loss)
+            quit()
             # print(logits.argmax(-1).cpu().tolist())
 
             optimizer.zero_grad()
