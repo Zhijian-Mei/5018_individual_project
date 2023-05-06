@@ -138,7 +138,8 @@ if __name__ == '__main__':
                     results.append(2)
                 else:
                     results.append(random.choice([0,1,2]))
-
+            if len(results) > 100:
+                break
         accuracy = round(accuracy_score(labels,results),2)
 
         print(f': accuracy {accuracy} at epoch {e}')
