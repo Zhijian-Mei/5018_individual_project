@@ -83,7 +83,6 @@ if __name__ == '__main__':
             outputs = model(input_ids=input_.input_ids,attention_mask=input_.attention_mask, labels=output_.input_ids)
             loss = outputs.loss
             print(loss.item())
-            quit()
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
