@@ -117,6 +117,7 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             print(outputs)
+            print(tokenizer.batch_decode(outputs, skip_special_tokens=True))
             quit()
         f1score = f1score / count
         print(f'f1_score: {f1score} at epoch {e}')
