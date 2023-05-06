@@ -23,44 +23,6 @@ def get_args():
     args = parser.parse_args()
     return args
 
-
-def get_token_labal(input_encoding, label, max_length):
-    attention_mask = input_encoding['attention_mask']
-    golden_labels = []
-    for j in range(input_encoding['input_ids'].shape[0]):
-        label_for_token = [-100 for _ in range(max_length)]
-        for k in range(max_length):
-            if attention_mask[j][k] == 1:
-                label_for_token[k] = 0
-            else:
-                break
-            if input_encoding.token_to_chars(j, k) is None:
-                label_for_token[k] = -100
-                continue
-            start, end = input_encoding.token_to_chars(j, k)
-            for position in label[j]:
-                if position == -1:
-                    break
-                if start <= position < end:
-                    label_for_token[k] = 1
-                    break
-        golden_labels.append(label_for_token)
-    return golden_labels
-
-
-def get_char_label(input_encoding, label, text_length, max_length=1024):
-    golden_labels = []
-    for j in range(input_encoding['input_ids'].shape[0]):
-        label_for_char = [-100 for _ in range(max_length)]
-        for k in range(max_length):
-            if k < text_length[j]:
-                label_for_char[k] = 0
-        for position in label[j]:
-            label_for_char[int(position)] = 1
-        golden_labels.append(label_for_char)
-    return golden_labels
-
-
 if __name__ == '__main__':
     args = get_args()
     print(args)
@@ -70,8 +32,8 @@ if __name__ == '__main__':
     model_name = 't5-small'
     print(f'Backbone model name: {model_name}')
 
-    tokenizer = AutoTokenizer.from_pretrained("t5-small")
-    model = T5ForConditionalGeneration.from_pretrained("t5-small").to(device)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0001)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
