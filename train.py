@@ -100,11 +100,15 @@ if __name__ == '__main__':
                 break
 
         model.eval()
+        results = []
+        labels = []
         for i in tqdm(eval_loader,
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-
+            
+            print(output)
+            quit()
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -116,9 +120,18 @@ if __name__ == '__main__':
 
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
-            print(tokenizer.batch_decode(outputs, skip_special_tokens=True))
+            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+
+            for output_text in output_texts:
+                if 'entailment' in output_text:
+                    results.append(0)
+                elif 'neutral' in output_text:
+                    results.append(1)
+                elif 'contradiction' in output_text:
+                    results.append(2)
+
             quit()
-        f1score = f1score / count
+
         print(f'f1_score: {f1score} at epoch {e}')
         torch.save({'model': model.state_dict()},
                    f"checkpoint/{model_name}_epoch{e}_{'freeze' if args.freeze == 1 else 'unfreeze'}.pt")
