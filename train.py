@@ -82,7 +82,7 @@ if __name__ == '__main__':
     # print(last_hidden_states.shape)
 
     print('loading data')
-    
+
     dataset = MyDataset(tokenizer,mode =args.mode,prompt=True if args.prompt else False)
 
     train_batch_size = 8
@@ -102,6 +102,7 @@ if __name__ == '__main__':
             text, output = i[0], i[1]
             print(text)
             print(output)
+            quit()
             input_encoding = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
