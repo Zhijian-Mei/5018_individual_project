@@ -6,7 +6,7 @@ from tqdm import trange
 
 def get_data():
     dataset = load_dataset('multi_nli')['train']
-    dataset.set_format(type="torch", columns=["premise", "hypothesis","label"])
+    dataset = dataset.set_format(type="torch", columns=["premise", "hypothesis","label"])
     print(dataset)
     dataloader = DataLoader(dataset, batch_size=4)
     return dataloader
