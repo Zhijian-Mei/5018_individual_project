@@ -17,7 +17,9 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=8)
-    parser.add_argument('-gpu', type=str, required=True)
+    parser.add_argument('-gpu', type=str, default = '0')
+    parser.add_argument('-mode', type=str, default='generation')
+    parser.add_argument('-prompt', type=int, default=0)
     args = parser.parse_args()
     return args
 
@@ -80,30 +82,29 @@ if __name__ == '__main__':
     # print(last_hidden_states.shape)
 
     print('loading data')
-    dataset = MyDataset(tokenizer,mode = 'generation',prompt=True)
-    quit()
-    train_loader = DataLoader(trainSet, batch_size=train_batch_size, shuffle=False)
-    eval_loader = DataLoader(evalSet, batch_size=eval_batch_size)
+    
+    dataset = MyDataset(tokenizer,mode =args.mode,prompt=True if args.prompt else False)
 
-    print('loading test data')
-    testSet = get_data(test)
-    testSet = ToxicDataset(testSet, tokenizer, max_length)
-    test_loader = DataLoader(testSet, batch_size=eval_batch_size)
+    train_batch_size = 8
+    eval_batch_size = 8
+    train_set,eval_set = torch.utils.data.random_split(dataset, [0.8, 0.2])
+    train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
+    eval_loader = DataLoader(eval_set, batch_size=eval_batch_size)
 
     epoch = 20
     global_step = 0
-    best_f1 = 0
-
 
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
-                      mininterval=200
+                      # mininterval=200
                       ):
-            text, label, text_length = i[0], i[1].to(device), i[2]
+            text, output = i[0], i[1]
+            print(text)
+            print(output)
             input_encoding = tokenizer.batch_encode_plus(
                 text,
-                max_length=max_length,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
