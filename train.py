@@ -18,7 +18,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=2)
     parser.add_argument('-gpu', type=str, default = '0')
-    parser.add_argument('-mode', type=str, default='generation')
+    parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
     args = parser.parse_args()
     return args

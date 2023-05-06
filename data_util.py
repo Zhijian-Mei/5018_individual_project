@@ -12,7 +12,7 @@ def get_data():
 
 
 class MyDataset(Dataset):
-    def __init__(self, tokenizer, mode='generation',prompt = False):
+    def __init__(self, tokenizer, mode='g',prompt = False):
         self.dataset = get_data()
         self.premises = self.dataset['premise']
         self.hypothesises = self.dataset['hypothesis']
@@ -26,8 +26,8 @@ class MyDataset(Dataset):
             hypothesis = self.premises[i]
             label = self.labels[i]
             if self.prompt:
-                input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis}?'
-                if self.mode == 'generation':
+                input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis} ?'
+                if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'the relation is entailment.'
                     elif int(label) == 1:
@@ -38,7 +38,7 @@ class MyDataset(Dataset):
                     output_ = int(label)
             else:
                 input_ = f'{premise};{hypothesis}'
-                if self.mode == 'generation':
+                if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'the relation is entailment.'
                     elif int(label) == 1:
