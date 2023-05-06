@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
             if global_step % 100 == 0:
                 print('loss: ', loss.item())
-                
+
 
         model.eval()
         results = []
