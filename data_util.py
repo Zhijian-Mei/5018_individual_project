@@ -29,22 +29,22 @@ class MyDataset(Dataset):
                 input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis} ?'
                 if self.mode == 'g':
                     if int(label) == 0:
-                        output_ = f'the relation is entailment.'
+                        output_ = f'entailment'
                     elif int(label) == 1:
-                        output_ = f'the relation is neutral.'
+                        output_ = f'neutral'
                     elif int(label) == 2:
-                        output_ = f'the relation is contradiction.'
+                        output_ = f'contradiction'
                 else:
                     output_ = int(label)
             else:
                 input_ = f'{premise};{hypothesis}'
                 if self.mode == 'g':
                     if int(label) == 0:
-                        output_ = f'the relation is entailment.'
+                        output_ = f'entailment'
                     elif int(label) == 1:
-                        output_ = f'the relation is neutral.'
+                        output_ = f'neutral'
                     elif int(label) == 2:
-                        output_ = f'the relation is contradiction.'
+                        output_ = f'contradiction'
                 else:
                     output_ = int(label)
 
