@@ -71,7 +71,7 @@ if __name__ == '__main__':
     print(f'Backbone model name: {model_name}')
 
     tokenizer = AutoTokenizer.from_pretrained("t5-small")
-    model = T5ForConditionalGeneration.from_pretrained("t5-small")
+    model = T5ForConditionalGeneration.from_pretrained("t5-small").to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0001)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
