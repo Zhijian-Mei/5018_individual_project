@@ -16,7 +16,7 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=8)
+    parser.add_argument('-batch_size', type=int, default=2)
     parser.add_argument('-gpu', type=str, default = '0')
     parser.add_argument('-mode', type=str, default='generation')
     parser.add_argument('-prompt', type=int, default=0)
@@ -85,8 +85,8 @@ if __name__ == '__main__':
 
     dataset = MyDataset(tokenizer,mode =args.mode,prompt=True if args.prompt else False)
 
-    train_batch_size = 8
-    eval_batch_size = 8
+    train_batch_size = args.batch_size
+    eval_batch_size = args.batch_size
     train_set,eval_set = torch.utils.data.random_split(dataset, [0.8, 0.2])
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(eval_set, batch_size=eval_batch_size)
