@@ -16,8 +16,8 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--batch_size', type=int, default=8)
-    parser.add_argument('--gpu', type=str, required=True)
+    parser.add_argument('-batch_size', type=int, default=8)
+    parser.add_argument('-gpu', type=str, required=True)
     args = parser.parse_args()
     return args
 
