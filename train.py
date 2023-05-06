@@ -62,27 +62,28 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            input_ids = tokenizer.batch_encode_plus(
+            input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
-            ).input_ids.to(device)
+            ).to(device)
 
-            output_ids = tokenizer.batch_encode_plus(
+            output_ = tokenizer.batch_encode_plus(
                 output,
                 max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
-            ).input_ids.to(device)
+            ).to(device)
 
-            outputs = model(input_ids=input_ids, labels=output_ids)
+            outputs = model(input_ids=input_.input_ids,attention_mask=input_.attention_mask, labels=output_.input_ids)
             loss = outputs.loss
-
+            print(loss.item())
+            quit()
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
