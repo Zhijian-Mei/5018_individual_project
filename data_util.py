@@ -25,8 +25,6 @@ class MyDataset(Dataset):
             premise = self.premises[i]
             hypothesis = self.premises[i]
             label = self.labels[i]
-            print(premise)
-            quit()
             if self.prompt:
                 input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis}?'
                 if self.mode == 'generation':

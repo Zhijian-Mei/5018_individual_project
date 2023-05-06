@@ -80,7 +80,7 @@ if __name__ == '__main__':
     # print(last_hidden_states.shape)
 
     print('loading data')
-    dataset = MyDataset(tokenizer)
+    dataset = MyDataset(tokenizer,mode = 'generation',prompt=True)
     quit()
     train_loader = DataLoader(trainSet, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(evalSet, batch_size=eval_batch_size)
