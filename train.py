@@ -106,8 +106,15 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            
+            for o in output:
+                if 'entailment' in o:
+                    labels.append(0)
+                elif 'neutral' in o:
+                    labels.append(1)
+                elif 'contradiction' in o:
+                    labels.append(2)
             print(output)
+            print(labels)
             quit()
             input_ = tokenizer.batch_encode_plus(
                 text,
