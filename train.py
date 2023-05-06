@@ -120,13 +120,13 @@ if __name__ == '__main__':
 
             outputs = model(input_ids=input_ids, labels=output_ids)
             loss = outputs.loss
-            print(loss)
-            quit()
-            # print(logits.argmax(-1).cpu().tolist())
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+
+            # print(logits.argmax(-1).cpu().tolist())
+
             global_step += 1
 
             if global_step % 100 == 0:
@@ -135,8 +135,10 @@ if __name__ == '__main__':
         f1score = 0
         count = 0
         model.eval()
-        for i in tqdm(eval_loader,mininterval=200):
-            text, label, _ = i[0], i[1], i[2]
+        for i in tqdm(eval_loader,
+                      mininterval=200
+                      ):
+            text, label = i[0], i[1]
             input_encoding = tokenizer.batch_encode_plus(
                 text,
                 max_length=max_length,
