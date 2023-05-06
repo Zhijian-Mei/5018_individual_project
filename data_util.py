@@ -5,7 +5,7 @@ from torch.utils.data import Dataset
 from tqdm import trange
 
 def get_data():
-    dataset = load_dataset('multi_nli')
+    dataset = load_dataset('multi_nli')['train']
     print(dataset)
 
 if __name__ == '__main__':
