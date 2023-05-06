@@ -28,15 +28,26 @@ class MyDataset(Dataset):
             if self.prompt:
                 input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis}?'
                 if self.mode == 'generation':
-                    output_ = f'the relation is {label}'
+                    if int(label) == 0:
+                        output_ = f'the relation is entailment.'
+                    elif int(label) == 1:
+                        output_ = f'the relation is neutral.'
+                    elif int(label) == 2:
+                        output_ = f'the relation is contradiction.'
                 else:
-                    output_ = label
+                    output_ = int(label)
             else:
                 input_ = f'{premise};{hypothesis}'
                 if self.mode == 'generation':
-                    output_ = f'{label}'
+                    if int(label) == 0:
+                        output_ = f'the relation is entailment.'
+                    elif int(label) == 1:
+                        output_ = f'the relation is neutral.'
+                    elif int(label) == 2:
+                        output_ = f'the relation is contradiction.'
                 else:
-                    output_ = label
+                    output_ = int(label)
+
             self.input.append(input_)
             self.output.append(output_)
 
