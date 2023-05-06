@@ -21,7 +21,7 @@ class MyDataset(Dataset):
         self.prompt = prompt
         self.input = []
         self.output = []
-        for i in range(len(self.premises)):
+        for i in trange(len(self.premises)):
             premise = self.premises[i]
             hypothesis = self.premises[i]
             label = self.labels[i]
