@@ -35,7 +35,7 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=0.0001)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
     # print(inputs['input_ids'].shape)
     # outputs = model(**inputs)
