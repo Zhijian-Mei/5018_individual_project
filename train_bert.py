@@ -101,12 +101,12 @@ if __name__ == '__main__':
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1).cpu()
 
-            print(output.tolist())
-            print(preds.tolist())
-            quit()
+            labels.extend(output.tolist())
+            predicts.extend(preds.tolist())
         accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
+        quit()
         torch.save({'model': model.state_dict()},
                    f"checkpoint/{model_name}_{accuracy}_epoch{e}_{args.mode}_{args.prompt}.pt")
         if accuracy > best_accuracy:
