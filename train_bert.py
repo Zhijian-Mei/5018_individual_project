@@ -66,6 +66,9 @@ if __name__ == '__main__':
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1)
+            print(preds)
+            print(output)
+            quit()
             loss = loss_fn(preds,output)
             print(preds)
             print(output)
