@@ -4,7 +4,7 @@ import random
 import torch
 from torch import nn, cuda
 from tqdm import tqdm
-from transformers import AutoTokenizer, T5ForConditionalGeneration, BertModel
+from transformers import AutoTokenizer, T5ForConditionalGeneration, BertModel,T5Config
 import jsonlines
 from data_util import *
 from sklearn.metrics import accuracy_score
@@ -63,8 +63,9 @@ if __name__ == '__main__':
                                      prompt=True if args.prompt else False)
     mismatched_dataLoader = DataLoader(mismatched_dataset, batch_size=args.batch_size)
 
+    config = T5Config()
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
+    model = T5ForConditionalGeneration(config).to(device)
 
     ## load fine-tuned checkpoint
 
