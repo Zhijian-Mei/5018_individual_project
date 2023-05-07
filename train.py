@@ -169,5 +169,5 @@ if __name__ == '__main__':
         if accuracy > best_accuracy:
             best_accuracy = accuracy
             torch.save({'model': model.state_dict()},
-                       f"checkpoint/best_{model_name}_epoch{e}_{accuracy}.pt")
+                       f"checkpoint/best_{model_name}_epoch{e}_{accuracy}_{args.mode}_{args.prompt}.pt")
             print('saving better checkpoint')
