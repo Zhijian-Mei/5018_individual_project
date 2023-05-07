@@ -1,5 +1,6 @@
 import argparse
 
+import numpy as np
 import torch
 from tqdm import tqdm
 from transformers import BertForSequenceClassification, AutoTokenizer, BertTokenizer
@@ -75,14 +76,14 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 100 == 0:
-                break
+            # if global_step % 100 == 0:
+            #     break
             #     print('loss: ', loss.item())
 
 
         predicts = []
         labels = []
-
+        best_accuracy = -np.inf
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
@@ -103,11 +104,11 @@ if __name__ == '__main__':
 
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
-            break
+
         accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
-        quit()
+
         torch.save({'model': model.state_dict()},
                    f"checkpoint/{model_name}_{accuracy}_epoch{e}_{args.mode}_{args.prompt}.pt")
         if accuracy > best_accuracy:
