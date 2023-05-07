@@ -26,7 +26,7 @@ class MyDataset(Dataset):
             hypothesis = self.premises[i]
             label = self.labels[i]
             if self.prompt:
-                input_ = f'what is the relation from the first sentence to the second sentence: {premise};{hypothesis} ?'
+                input_ = f'mnli premise: {premise}. hypothesis: {hypothesis}.'
                 if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'entailment'

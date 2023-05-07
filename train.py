@@ -108,13 +108,21 @@ if __name__ == '__main__':
         model.eval()
         results = []
         labels = []
+
+
+        def f(x):
+            if 'entailment' in o:
+                return 0
+            elif 'neutral' in o:
+                return 1
+            elif 'contradiction' in o:
+                return 2
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
             text, output = i[0], i[1]
 
-            results = list(map())
             for o in output:
                 if 'entailment' in o:
                     labels.append(0)
