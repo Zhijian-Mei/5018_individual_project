@@ -100,7 +100,7 @@ if __name__ == '__main__':
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1).cpu()
 
-            print(labels)
+            print(output)
             print(preds)
             quit()
         accuracy = round(accuracy_score(labels, predicts), 2)
