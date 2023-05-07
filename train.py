@@ -13,14 +13,14 @@ from transformers import AutoConfig, AutoModelForTokenClassification
 from model import *
 from evaluation import *
 from sklearn.metrics import accuracy_score
-from transformers import AutoTokenizer, T5ForConditionalGeneration, BertModel
+from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=2)
     parser.add_argument('-gpu', type=str, default='0')
-    parser.add_argument('-mode', type=str, default='g')
+    parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
     args = parser.parse_args()
     return args
@@ -75,17 +75,10 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            output_ = tokenizer.batch_encode_plus(
-                output,
-                max_length=256,
-                pad_to_max_length=True,
-                truncation=True,
-                padding="max_length",
-                return_tensors="pt",
-            ).to(device)
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_.input_ids)
-            loss = outputs.loss
+            logits = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask).logits
+            print(logits)
+            quit()
 
             optimizer.zero_grad()
             loss.backward()
