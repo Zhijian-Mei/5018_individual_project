@@ -50,6 +50,9 @@ if __name__ == '__main__':
     print('loading data')
 
     dataset = MyDataset(tokenizer, mode=args.mode, prompt=True if args.prompt else False)
+    dataset = dataset[len(dataset)/2:]
+    print(len(dataset))
+    quit()
 
     train_batch_size = args.batch_size
     eval_batch_size = args.batch_size
@@ -95,8 +98,7 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            print(output)
-            print(output_texts)
+
             # print(logits.argmax(-1).cpu().tolist())
 
             global_step += 1
@@ -158,12 +160,10 @@ if __name__ == '__main__':
             #         results.append(2)
             #     else:
             #         results.append(random.choice([0,1,2]))
-            break
+
         labels = list(map(f,labels))
         results = list(map(f,results))
-        print(labels)
-        print(results)
-        quit()
+
         accuracy = round(accuracy_score(labels,results),2)
 
         print(f': accuracy {accuracy} at epoch {e}')
