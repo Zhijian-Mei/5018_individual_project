@@ -30,7 +30,7 @@ if __name__ == '__main__':
         num_labels = 3,
         output_attentions = False,
         output_hidden_states = False,
-    )
+    ).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
 
