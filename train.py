@@ -95,6 +95,7 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            print(output)
             print(output_texts)
             # print(logits.argmax(-1).cpu().tolist())
 
