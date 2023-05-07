@@ -65,10 +65,10 @@ if __name__ == '__main__':
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
-            preds = torch.argmax(logits, dim=1).float()
-            print(preds)
+            # preds = torch.argmax(logits, dim=1).float()
+            print(logits)
             print(output)
-            loss = loss_fn(preds,output)
+            loss = loss_fn(logits,output)
             print(loss)
             quit()
 
