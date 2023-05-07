@@ -53,8 +53,7 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = list(i[0]), i[1]
-            print(text)
-            quit()
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -63,7 +62,8 @@ if __name__ == '__main__':
                 padding="max_length",
                 return_tensors="pt",
             ).to(device)
-
+            print(input_)
+            quit()
             output_ = tokenizer.batch_encode_plus(
                 output,
                 max_length=256,
