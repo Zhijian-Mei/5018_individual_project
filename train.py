@@ -13,8 +13,7 @@ from transformers import AutoConfig, AutoModelForTokenClassification
 from model import *
 from evaluation import *
 from sklearn.metrics import accuracy_score
-from transformers import AutoTokenizer, T5ForConditionalGeneration,BertModel
-
+from transformers import AutoTokenizer, T5ForConditionalGeneration, BertModel
 
 
 def get_args():
@@ -50,9 +49,6 @@ if __name__ == '__main__':
     print('loading data')
 
     dataset = MyDataset(tokenizer, mode=args.mode, prompt=True if args.prompt else False)
-    dataset = dataset[len(dataset)/2:]
-    print(len(dataset))
-    quit()
 
     train_batch_size = args.batch_size
     eval_batch_size = args.batch_size
@@ -103,10 +99,9 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 100 == 0:
-                break
+            # if global_step % 100 == 0:
+            #     break
             #     print('loss: ', loss.item())
-
 
         model.eval()
         results = []
@@ -122,6 +117,8 @@ if __name__ == '__main__':
                 return 2
             else:
                 return random.choice([0, 1, 2])
+
+
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
                       mininterval=200
@@ -161,10 +158,10 @@ if __name__ == '__main__':
             #     else:
             #         results.append(random.choice([0,1,2]))
 
-        labels = list(map(f,labels))
-        results = list(map(f,results))
+        labels = list(map(f, labels))
+        results = list(map(f, results))
 
-        accuracy = round(accuracy_score(labels,results),2)
+        accuracy = round(accuracy_score(labels, results), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
         torch.save({'model': model.state_dict()},
