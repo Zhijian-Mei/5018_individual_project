@@ -82,6 +82,7 @@ if __name__ == '__main__':
 
         predicts = []
         labels = []
+
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
@@ -100,8 +101,8 @@ if __name__ == '__main__':
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1).cpu()
 
-            print(output)
-            print(preds)
+            print(output.cpu().tolist())
+            print(preds.cpu().tolist())
             quit()
         accuracy = round(accuracy_score(labels, predicts), 2)
 
