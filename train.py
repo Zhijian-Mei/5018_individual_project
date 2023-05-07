@@ -63,7 +63,7 @@ if __name__ == '__main__':
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
-                      # mininterval=200
+                      mininterval=200
                       ):
             text, output = i[0], i[1]
 
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         labels = []
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
-                      # mininterval=200
+                      mininterval=200
                       ):
             text, output = i[0], i[1]
             for o in output:
