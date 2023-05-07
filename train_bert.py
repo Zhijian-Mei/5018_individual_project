@@ -52,7 +52,7 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       mininterval=200
                       ):
-            text, output = list(i[0]), i[1].to(device)
+            text, output = i[0], i[1].float().to(device)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
-            preds = torch.argmax(logits, dim=1)
+            preds = torch.argmax(logits, dim=1).float()
             print(preds)
             print(output)
             loss = loss_fn(preds,output)
