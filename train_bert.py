@@ -62,16 +62,6 @@ if __name__ == '__main__':
                 padding="max_length",
                 return_tensors="pt",
             ).to(device)
-            print(input_)
-            quit()
-            output_ = tokenizer.batch_encode_plus(
-                output,
-                max_length=256,
-                pad_to_max_length=True,
-                truncation=True,
-                padding="max_length",
-                return_tensors="pt",
-            ).to(device)
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_.input_ids)
             loss = outputs.loss

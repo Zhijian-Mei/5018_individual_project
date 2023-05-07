@@ -20,7 +20,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=2)
     parser.add_argument('-gpu', type=str, default='0')
-    parser.add_argument('-mode', type=str, default='c')
+    parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
     args = parser.parse_args()
     return args
@@ -39,6 +39,12 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
+    # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
+    # print(inputs['input_ids'].shape)
+    # outputs = model(**inputs)
+    #
+    # last_hidden_states = outputs.last_hidden_state
+    # print(last_hidden_states.shape)
 
     print('loading data')
 
@@ -70,9 +76,8 @@ if __name__ == '__main__':
             ).to(device)
 
 
-            logits = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask).logits
-            print(logits)
-            quit()
+            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output)
+            loss = outputs.loss
 
             optimizer.zero_grad()
             loss.backward()
