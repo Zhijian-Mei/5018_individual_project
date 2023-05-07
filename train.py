@@ -39,7 +39,7 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=0.0002)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.01)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
     # print(inputs['input_ids'].shape)
     # outputs = model(**inputs)
@@ -113,6 +113,8 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = i[0], i[1]
+
+            results = list(map())
             for o in output:
                 if 'entailment' in o:
                     labels.append(0)
