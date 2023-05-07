@@ -39,7 +39,7 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
     # print(inputs['input_ids'].shape)
     # outputs = model(**inputs)
@@ -92,12 +92,16 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
 
+            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+
+            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            print(output_texts)
             # print(logits.argmax(-1).cpu().tolist())
 
             global_step += 1
 
-            if global_step % 100 == 0:
-                print('loss: ', loss.item())
+            # if global_step % 100 == 0:
+            #     print('loss: ', loss.item())
 
 
         model.eval()
