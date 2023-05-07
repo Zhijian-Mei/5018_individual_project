@@ -104,7 +104,7 @@ if __name__ == '__main__':
             #     print('loss: ', loss.item())
 
         model.eval()
-        results = []
+        predicts = []
         labels = []
 
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
-            results.extend(output_texts)
+            predicts.extend(output_texts)
             # for output_text in output_texts:
             #     if 'entailment' in output_text:
             #         results.append(0)
@@ -159,9 +159,9 @@ if __name__ == '__main__':
             #         results.append(random.choice([0,1,2]))
 
         labels = list(map(f, labels))
-        results = list(map(f, results))
+        predicts = list(map(f, predicts))
 
-        accuracy = round(accuracy_score(labels, results), 2)
+        accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
         torch.save({'model': model.state_dict()},

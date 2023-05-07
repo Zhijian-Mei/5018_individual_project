@@ -57,7 +57,36 @@ class MyDataset(Dataset):
     def __getitem__(self, idx):
         return self.input[idx],self.output[idx]
 
+class testDataset(Dataset):
+    def __init__(self,premises,hypothesises,labels, mode='g',prompt = False):
+        self.premises = premises
+        self.hypothesises = hypothesises
+        self.labels = labels
+        self.mode = mode
+        self.prompt = prompt
+        self.input = []
+        self.output = []
+        for i in range(len(self.premises)):
+            premise = self.premises[i]
+            hypothesis = self.premises[i]
+            label = self.labels[i]
+            if self.prompt:
+                input_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is <MASK>'
+                if self.mode == 'g':
+                    output_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is {label}.'
+                else:
+                    output_ = label
+            else:
+                input_ = f'mnli premise: {premise} hypothesis: {hypothesis}'
+                output_ = label
+            self.input.append(input_)
+            self.output.append(output_)
 
+    def __len__(self):
+        return len(self.input)
+
+    def __getitem__(self, idx):
+        return self.input[idx],self.output[idx]
 
 if __name__ == '__main__':
     train_loader = get_data()
