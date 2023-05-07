@@ -68,10 +68,7 @@ if __name__ == '__main__':
             preds = torch.argmax(logits, dim=1)
             print(preds)
             print(output)
-            quit()
             loss = loss_fn(preds,output)
-            print(preds)
-            print(output)
             print(loss)
             quit()
 
