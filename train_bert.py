@@ -52,7 +52,7 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       mininterval=200
                       ):
-            text, output = i[0], torch.Tensor(i[1])
+            text, output = i[0], i[1]
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -67,9 +67,11 @@ if __name__ == '__main__':
             logits = outputs.logits
             # preds = torch.argmax(logits, dim=1).float()
 
-            loss = loss_fn(logits,output)
-            print(loss)
+            print(logits)
+            print(output)
             quit()
+            loss = loss_fn(logits,output)
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
