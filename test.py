@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     ## load fine-tuned checkpoint
 
-    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_12.pt')
+    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_1.pt')
     model.load_state_dict(checkpoint['model'])
 
     predicts = []
