@@ -5,7 +5,7 @@ from tqdm import tqdm
 from transformers import BertForSequenceClassification, AutoTokenizer, BertTokenizer
 from torch import cuda,nn
 from data_util import *
-
+from sklearn.metrics import accuracy_score
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       mininterval=200
                       ):
-            text, output = i[0], i[1].to(device)
+            text, output = i[0], i[1]
 
             input_ = tokenizer.batch_encode_plus(
                 text,
