@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
-
+            break
         accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
