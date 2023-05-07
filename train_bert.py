@@ -63,8 +63,10 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_.input_ids)
-            loss = outputs.loss
+            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+            logits = outputs.logits
+            print(logits.shape)
+            quit()
 
             optimizer.zero_grad()
             loss.backward()
