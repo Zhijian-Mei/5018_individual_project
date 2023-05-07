@@ -39,12 +39,6 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
-    # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
-    # print(inputs['input_ids'].shape)
-    # outputs = model(**inputs)
-    #
-    # last_hidden_states = outputs.last_hidden_state
-    # print(last_hidden_states.shape)
 
     print('loading data')
 
