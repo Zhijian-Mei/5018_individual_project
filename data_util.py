@@ -26,18 +26,18 @@ class MyDataset(Dataset):
             hypothesis = self.premises[i]
             label = self.labels[i]
             if self.prompt:
-                input_ = f'mnli premise: {premise} hypothesis: {hypothesis}'
+                input_ = f'premise: {premise} hypothesis: {hypothesis} , the relation is <MASK>'
                 if self.mode == 'g':
                     if int(label) == 0:
-                        output_ = f'entailment'
+                        output_ = f'premise: {premise} hypothesis: {hypothesis} , the relation is entailment.'
                     elif int(label) == 1:
-                        output_ = f'neutral'
+                        output_ = f'premise: {premise} hypothesis: {hypothesis} , the relation is neutral.'
                     elif int(label) == 2:
-                        output_ = f'contradiction'
+                        output_ = f'premise: {premise} hypothesis: {hypothesis} , the relation is contradiction.'
                 else:
                     output_ = int(label)
             else:
-                input_ = f'{premise};{hypothesis}'
+                input_ = f'mnli premise: {premise} hypothesis: {hypothesis}'
                 if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'entailment'
