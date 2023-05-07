@@ -3,7 +3,7 @@ import argparse
 import torch
 from tqdm import tqdm
 from transformers import BertForSequenceClassification, AutoTokenizer, BertTokenizer
-from torch import cuda
+from torch import cuda,nn
 from data_util import *
 
 
@@ -46,13 +46,13 @@ if __name__ == '__main__':
 
     epoch = 20
     global_step = 0
-
+    loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
                       mininterval=200
                       ):
-            text, output = list(i[0]), i[1]
+            text, output = list(i[0]), i[1].to(device)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -66,7 +66,9 @@ if __name__ == '__main__':
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1)
+            loss = loss_fn(preds,output)
             print(preds)
+            print(loss)
             quit()
 
             optimizer.zero_grad()
