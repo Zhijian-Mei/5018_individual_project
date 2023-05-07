@@ -63,13 +63,12 @@ if __name__ == '__main__':
                                      prompt=True if args.prompt else False)
     mismatched_dataLoader = DataLoader(mismatched_dataset, batch_size=args.batch_size)
 
-    config = T5Config()
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = T5ForConditionalGeneration(config).to(device)
+    model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     ## load fine-tuned checkpoint
 
-    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_0.pt')
+    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_12.pt')
     model.load_state_dict(checkpoint['model'])
 
     predicts = []
