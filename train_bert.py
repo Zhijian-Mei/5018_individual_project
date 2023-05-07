@@ -66,24 +66,50 @@ if __name__ == '__main__':
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
             # preds = torch.argmax(logits, dim=1).float()
-            print(logits)
-            print(output)
+
             loss = loss_fn(logits,output)
-            print(loss)
-            quit()
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-            # outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-            #
-            # output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-
-            # print(logits.argmax(-1).cpu().tolist())
-
             global_step += 1
 
-            # if global_step % 100 == 0:
-            #     break
+            if global_step % 100 == 0:
+                break
             #     print('loss: ', loss.item())
+
+
+        predicts = []
+        labels = []
+        for i in tqdm(eval_loader,
+                      mininterval=200
+                      ):
+            text, output = i[0], i[1]
+
+            input_ = tokenizer.batch_encode_plus(
+                text,
+                max_length=256,
+                pad_to_max_length=True,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            ).to(device)
+
+            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+            logits = outputs.logits
+            preds = torch.argmax(logits, dim=1).cpu()
+
+            print(labels)
+            print(preds)
+            quit()
+        accuracy = round(accuracy_score(labels, predicts), 2)
+
+        print(f': accuracy {accuracy} at epoch {e}')
+        torch.save({'model': model.state_dict()},
+                   f"checkpoint/{model_name}_{accuracy}_epoch{e}_{args.mode}_{args.prompt}.pt")
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
+            torch.save({'model': model.state_dict()},
+                       f"checkpoint/best_{model_name}_epoch{e}_{accuracy}_{args.mode}_{args.prompt}.pt")
+            print('saving better checkpoint')
