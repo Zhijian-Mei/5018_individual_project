@@ -101,7 +101,8 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            # if global_step % 100 == 0:
+            if global_step % 100 == 0:
+                break
             #     print('loss: ', loss.item())
 
 
@@ -111,25 +112,28 @@ if __name__ == '__main__':
 
 
         def f(x):
-            if 'entailment' in o:
+            if 'entailment' in x:
                 return 0
-            elif 'neutral' in o:
+            elif 'neutral' in x:
                 return 1
-            elif 'contradiction' in o:
+            elif 'contradiction' in x:
                 return 2
+            else:
+                return random.choice([0, 1, 2])
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
             text, output = i[0], i[1]
 
-            for o in output:
-                if 'entailment' in o:
-                    labels.append(0)
-                elif 'neutral' in o:
-                    labels.append(1)
-                elif 'contradiction' in o:
-                    labels.append(2)
+            labels.extend(list(output))
+            # for o in output:
+            #     if 'entailment' in o:
+            #         labels.append(0)
+            #     elif 'neutral' in o:
+            #         labels.append(1)
+            #     elif 'contradiction' in o:
+            #         labels.append(2)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -144,16 +148,22 @@ if __name__ == '__main__':
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
-            for output_text in output_texts:
-                if 'entailment' in output_text:
-                    results.append(0)
-                elif 'neutral' in output_text:
-                    results.append(1)
-                elif 'contradiction' in output_text:
-                    results.append(2)
-                else:
-                    results.append(random.choice([0,1,2]))
-
+            results.extend(output_texts)
+            # for output_text in output_texts:
+            #     if 'entailment' in output_text:
+            #         results.append(0)
+            #     elif 'neutral' in output_text:
+            #         results.append(1)
+            #     elif 'contradiction' in output_text:
+            #         results.append(2)
+            #     else:
+            #         results.append(random.choice([0,1,2]))
+            break
+        labels = list(map(f,labels))
+        results = list(map(f,results))
+        print(labels)
+        print(results)
+        quit()
         accuracy = round(accuracy_score(labels,results),2)
 
         print(f': accuracy {accuracy} at epoch {e}')
