@@ -2,7 +2,7 @@ import argparse
 
 import torch
 from tqdm import tqdm
-from transformers import BertForSequenceClassification, AutoTokenizer
+from transformers import BertForSequenceClassification, AutoTokenizer, BertTokenizer
 from torch import cuda
 from data_util import *
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     model_name = 'bert-base-uncased'
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = BertTokenizer.from_pretrained(model_name)
     model = BertForSequenceClassification.from_pretrained(
         model_name,
         num_labels = 3,
