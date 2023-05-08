@@ -7,6 +7,8 @@ from tqdm import trange
 
 def get_data():
     dataset = load_dataset('multi_nli')['train']
+    print(dataset)
+    quit()
     dataset.set_format(columns=["premise", "hypothesis", "label"])
     return dataset
 
@@ -17,8 +19,6 @@ def get_review():
 class Spam_dataset(Dataset):
     def __init__(self):
         self.dataset = get_review()
-        print(dataset)
-        quit()
         self.input = []
         self.output = []
 
