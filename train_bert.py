@@ -80,7 +80,7 @@ if __name__ == '__main__':
             #     break
             #     print('loss: ', loss.item())
 
-
+        model.eval()
         predicts = []
         labels = []
         best_accuracy = -np.inf
@@ -102,6 +102,9 @@ if __name__ == '__main__':
             logits = outputs.logits
             preds = torch.argmax(logits, dim=1).cpu()
 
+            print(output.tolist())
+            print(preds.tolist())
+            
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
 
