@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-4)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
     # print(inputs['input_ids'].shape)
     # outputs = model(**inputs)
@@ -101,9 +101,8 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            # if global_step % 300 == 0:
-            #     break
-            #     print('loss: ', loss.item())
+            if global_step % 300 == 0:
+                break
 
         model.eval()
         predicts = []
@@ -153,7 +152,8 @@ if __name__ == '__main__':
             #         results.append(2)
             #     else:
             #         results.append(random.choice([0,1,2]))
-
+            if len(labels) > 500:
+                break
         labels = list(map(f, labels))
         predicts = list(map(f, predicts))
 
