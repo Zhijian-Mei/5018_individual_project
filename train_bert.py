@@ -67,8 +67,11 @@ if __name__ == '__main__':
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
-            # preds = torch.argmax(logits, dim=1).float()
 
+            preds = torch.argmax(logits, dim=1).float()
+            print(preds.tolist())
+            print(output.cpu().tolist())
+            print()
             loss = loss_fn(logits,output)
 
             optimizer.zero_grad()
@@ -80,7 +83,7 @@ if __name__ == '__main__':
             if global_step % 500 == 0:
                 break
             print('loss: ', loss.item())
-
+        continue
         model.eval()
         predicts = []
         labels = []
