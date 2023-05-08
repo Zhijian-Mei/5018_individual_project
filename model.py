@@ -10,8 +10,9 @@ class MyModel(nn.Module):
         self.project = nn.Linear(config.hidden_size, self.num_labels)
 
     def forward(self, text, labels=None):
-        x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state
-
+        x = self.model(text['input_ids'], text['attention_mask'])
+        print(x)
+        quit()
         logits = self.project(x)
         print(logits.shape)
         print(labels.shape)
