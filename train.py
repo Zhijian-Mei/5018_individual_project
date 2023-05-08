@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=128,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -78,18 +78,19 @@ if __name__ == '__main__':
 
             output_ = tokenizer.batch_encode_plus(
                 output,
-                max_length=128,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
             ).input_ids.to(device)
 
-            output_[output_ == 0] = -100
+            labels = output_.input_ids
+            labels[labels == 0] = -100
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_)
+            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=labels)
             loss = outputs.loss
-
+            print(loss.item())
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -100,8 +101,8 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 300 == 0:
-                break
+            # if global_step % 300 == 0:
+            #     break
             #     print('loss: ', loss.item())
 
         model.eval()
