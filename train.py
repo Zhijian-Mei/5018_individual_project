@@ -94,9 +94,9 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
 
-            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-
-            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            # outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+            #
+            # output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
             global_step += 1
 
