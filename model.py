@@ -7,7 +7,7 @@ class MyModel(nn.Module):
         super().__init__()
         self.model = bert
         self.num_labels = 3
-        self.prject = nn.Linear(config.hidden_size, self.num_labels)
+        self.project = nn.Linear(config.hidden_size, self.num_labels)
 
     def forward(self, text, labels=None):
         x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state

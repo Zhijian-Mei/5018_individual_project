@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=512,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
