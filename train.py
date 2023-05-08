@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
             if global_step % 1 == 0:
                 break
-
+        continue
         model.eval()
         predicts = []
         labels = []
