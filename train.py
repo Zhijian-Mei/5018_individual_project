@@ -72,6 +72,7 @@ if __name__ == '__main__':
         else:
             return random.choice([0, 1, 2])
 
+
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
@@ -116,16 +117,12 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 5 == 0:
-                continue
-
+            if global_step % 50 == 0:
+                break
 
         model.eval()
         predicts = []
         labels = []
-
-
-
 
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
