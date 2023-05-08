@@ -101,17 +101,17 @@ if __name__ == '__main__':
             labels = output_.input_ids
             labels[labels == 0] = -100
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=labels)
+            outputs = model(**input_, labels=labels)
             loss = outputs.loss
             # print(loss.item())
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+            outputs = model.generate(**input_)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            print(tokenizer.batch_decode(input_.input_ids,skip_special_tokens=True))
+            print(text)
             print(list(output))
             print(output_texts)
             print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
