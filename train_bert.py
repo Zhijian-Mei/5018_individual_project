@@ -33,7 +33,7 @@ if __name__ == '__main__':
         output_hidden_states = False,
     ).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-3)
 
     print('loading data')
 
