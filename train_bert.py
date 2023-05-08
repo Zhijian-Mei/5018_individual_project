@@ -33,6 +33,9 @@ if __name__ == '__main__':
     tokenizer = BertTokenizer.from_pretrained(model_name)
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     model = BertModel.from_pretrained(model_name).to(device)
+    for param in model.parameters():
+        param.required_grad = False
+        
     model = MyModel(model,config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -80,7 +83,7 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 1 == 0:
+            if global_step % 2 == 0:
                 break
 
         continue
