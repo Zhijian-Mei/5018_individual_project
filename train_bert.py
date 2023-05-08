@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 100 == 0:
+            if global_step % 500 == 0:
                 break
             print('loss: ', loss.item())
 
