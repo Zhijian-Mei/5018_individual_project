@@ -73,7 +73,7 @@ if __name__ == '__main__':
             print(output.cpu().tolist())
             print('loss: ', loss.item())
             print()
-            
+
 
             optimizer.zero_grad()
             loss.backward()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 500 == 0:
+            if global_step % 10 == 0:
                 break
 
         continue
