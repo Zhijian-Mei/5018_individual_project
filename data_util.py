@@ -6,7 +6,7 @@ from tqdm import trange
 
 
 def get_data():
-    dataset = load_dataset('multi_nli')['validation_matched']
+    dataset = load_dataset('multi_nli')['train']
     dataset.set_format(columns=["premise", "hypothesis", "label"])
     return dataset
 
