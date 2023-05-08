@@ -47,6 +47,8 @@ if __name__ == '__main__':
     train_batch_size = args.batch_size
     eval_batch_size = args.batch_size
     train_set, eval_set = torch.utils.data.random_split(dataset, [0.8, 0.2])
+    print('number of training sample: ',len(train_set))
+    print('number fo eval sample: ',len(eval_set))
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(eval_set, batch_size=eval_batch_size,shuffle=False)
 

@@ -32,10 +32,6 @@ class MyDataset(Dataset):
         self.premises = self.dataset['premise']
         self.hypothesises = self.dataset['hypothesis']
         self.labels = self.dataset['label']
-        print(len(self.premises))
-        print(len(self.labels))
-        print(len(self.hypothesises))
-        quit()
         self.mode = mode
         self.prompt = prompt
         self.input = []
