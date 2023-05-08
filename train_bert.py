@@ -9,6 +9,7 @@ from data_util import *
 from sklearn.metrics import accuracy_score
 
 
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=16)
@@ -70,6 +71,7 @@ if __name__ == '__main__':
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
             logits = outputs.logits
             print(logits.shape)
+            print(output.shape)
             quit()
             loss = loss_fn(logits, output)
             preds = torch.argmax(logits, dim=1).float()
