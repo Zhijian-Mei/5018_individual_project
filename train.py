@@ -84,8 +84,9 @@ if __name__ == '__main__':
                 padding="max_length",
                 return_tensors="pt",
             ).input_ids.to(device)
-
-            output_[ output_==0] = -100
+            print(output_)
+            output_[output_ == 0] = -100
+            print(output_)
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_)
             loss = outputs.loss
 
