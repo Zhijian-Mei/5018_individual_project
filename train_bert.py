@@ -35,7 +35,7 @@ if __name__ == '__main__':
     model = BertModel.from_pretrained(model_name).to(device)
     for param in model.parameters():
         param.required_grad = False
-        
+
     model = MyModel(model,config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -59,7 +59,7 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
-
+            print(text)
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=512,
