@@ -9,7 +9,7 @@ from tqdm import tqdm
 from data_util import *
 from torch import nn, cuda
 from torch.utils.data import DataLoader
-from transformers import AutoConfig, AutoModelForTokenClassification
+from transformers import AutoConfig, AutoModelForTokenClassification, AutoModelForSeq2SeqLM
 from model import *
 from evaluation import *
 from sklearn.metrics import accuracy_score
@@ -37,7 +37,8 @@ if __name__ == '__main__':
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-    model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
+    # model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=2e-4)
     # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
