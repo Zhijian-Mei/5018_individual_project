@@ -100,9 +100,9 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
 
-            outputs = model.generate(**input_)
-
-            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            # outputs = model.generate(**input_)
+            #
+            # output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
             # print(text)
             # print(list(output))
             # print(output_texts)
