@@ -59,7 +59,7 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
-            print(text)
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=512,
@@ -71,11 +71,7 @@ if __name__ == '__main__':
 
             logits, loss = model(input_,labels=output)
 
-            preds = torch.argmax(logits, dim=1).float()
-            print(preds.tolist())
-            print(output.cpu().tolist())
-            print('loss: ', loss.item())
-            print()
+            # preds = torch.argmax(logits, dim=1).float()
 
             optimizer.zero_grad()
             loss.backward()
@@ -83,10 +79,10 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 2 == 0:
-                break
+            # if global_step % 2 == 0:
+            #     break
 
-        continue
+
         model.eval()
         predicts = []
         labels = []
@@ -105,12 +101,9 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-            logits = outputs.logits
-            preds = torch.argmax(logits, dim=1).cpu()
+            logits, loss = model(input_,labels=output)
 
-            print(output.tolist())
-            print(preds.tolist())
+            preds = torch.argmax(logits, dim=1).float()
 
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
