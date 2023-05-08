@@ -119,7 +119,7 @@ if __name__ == '__main__':
         predicts = []
         labels = []
         accuracy = None
-        for i in tqdm(train_loader,
+        for i in tqdm(eval_loader,
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
