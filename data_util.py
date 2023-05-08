@@ -7,8 +7,6 @@ from tqdm import trange
 
 def get_data():
     dataset = load_dataset('multi_nli')['train'][:10000]
-    print(dataset)
-    quit()
     dataset.set_format(columns=["premise", "hypothesis", "label"])
     return dataset
 
@@ -33,6 +31,10 @@ class MyDataset(Dataset):
         self.premises = self.dataset['premise']
         self.hypothesises = self.dataset['hypothesis']
         self.labels = self.dataset['label']
+        print(len(self.premises))
+        print(len(self.labels))
+        print(len(self.hypothesises))
+        quit()
         self.mode = mode
         self.prompt = prompt
         self.input = []
