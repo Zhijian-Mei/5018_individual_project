@@ -117,8 +117,8 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 50 == 0:
-                break
+            if global_step % 1 == 0:
+                continue
 
         model.eval()
         predicts = []
