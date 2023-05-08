@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
             output_ = tokenizer.batch_encode_plus(
                 output,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -98,13 +98,10 @@ if __name__ == '__main__':
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
-            print(output_texts)
-            print(output)
-            
             global_step += 1
 
-            # if global_step % 100 == 0:
-            #     break
+            if global_step % 100 == 0:
+                break
             #     print('loss: ', loss.item())
 
         model.eval()
@@ -130,17 +127,10 @@ if __name__ == '__main__':
             text, output = i[0], i[1]
 
             labels.extend(list(output))
-            # for o in output:
-            #     if 'entailment' in o:
-            #         labels.append(0)
-            #     elif 'neutral' in o:
-            #         labels.append(1)
-            #     elif 'contradiction' in o:
-            #         labels.append(2)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -168,6 +158,7 @@ if __name__ == '__main__':
         accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
+        quit()
         torch.save({'model': model.state_dict()},
                    f"checkpoint/{model_name}_{accuracy}_epoch{e}_{args.mode}_{args.prompt}.pt")
         if accuracy > best_accuracy:
