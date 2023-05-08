@@ -12,7 +12,7 @@ from sklearn.utils.class_weight import compute_class_weight
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=32)
+    parser.add_argument('-batch_size', type=int, default=16)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=128,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -69,7 +69,7 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_,labels=output)
-            print(loss.item())
+            # print(loss.item())
             # preds = torch.argmax(logits, dim=1).float()
 
             optimizer.zero_grad()
@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=128,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
