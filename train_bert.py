@@ -76,8 +76,8 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            # if global_step % 100 == 0:
-            #     break
+            if global_step % 100 == 0:
+                break
             #     print('loss: ', loss.item())
 
         model.eval()
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
             print(output.tolist())
             print(preds.tolist())
-            
+
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
 
