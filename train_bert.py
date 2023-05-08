@@ -3,11 +3,11 @@ import argparse
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import BertForSequenceClassification, AutoTokenizer, BertTokenizer
+from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig
 from torch import cuda, nn
 from data_util import *
 from sklearn.metrics import accuracy_score
-
+from model import *
 
 
 def get_args():
@@ -29,13 +29,12 @@ if __name__ == '__main__':
 
     model_name = 'bert-base-uncased'
 
+    config = AutoConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
-    model = BertForSequenceClassification.from_pretrained(
+    internal_model = BertModel.from_pretrained(
         model_name,
-        num_labels=3,
-        output_attentions=False,
-        output_hidden_states=False,
     ).to(device)
+    model = MyModel(internal_model,config)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
@@ -68,9 +67,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            outputs = model(**input_,labels=output)
-            logits = outputs.logits
-            loss = outputs.loss
+            logits,loss = model(input_,labels=output)
             preds = torch.argmax(logits, dim=1).float()
             print(preds.tolist())
             print(output.cpu().tolist())
