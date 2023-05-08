@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
             if global_step % 100 == 0:
                 break
-            #     print('loss: ', loss.item())
+            print('loss: ', loss.item())
 
         model.eval()
         predicts = []
