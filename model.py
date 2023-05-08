@@ -11,8 +11,10 @@ class MyModel(nn.Module):
 
     def forward(self, text, labels=None):
         x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state
+        print(x.shape)
         logits = self.up(x)
-
+        print(logits.shape)
+        quit()
         loss_fct = nn.CrossEntropyLoss(ignore_index=-100)
 
         if labels is not None:
