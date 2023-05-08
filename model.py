@@ -26,12 +26,13 @@ class MyModel(nn.Module):
 
         # apply softmax activation
         x = self.softmax(x)
-        print(x)
-        print(x.shape)
-        quit()
-        loss_fct = nn.NLLLoss()
 
+        loss_fct = nn.CrossEntropyLoss()
+        print(x)
+        print(labels)
         if labels is not None:
             loss = loss_fct(x, labels)
+            print(loss)
+            quit()
             return x, loss
         return x
