@@ -8,7 +8,7 @@ from torch import cuda, nn
 from data_util import *
 from sklearn.metrics import accuracy_score
 from model import *
-
+from sklearn.utils.class_weight import compute_class_weight
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -16,7 +16,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
-    parser.add_argument('-lr', type=float, default=0.005)
+    parser.add_argument('-lr', type=float, default=1e-5)
     args = parser.parse_args()
     return args
 
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     model = MyModel(model,config).to(device)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     print('loading data')
 
