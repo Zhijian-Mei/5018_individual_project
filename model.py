@@ -14,6 +14,8 @@ class MyModel(nn.Module):
         self.softmax = nn.LogSoftmax(dim=1)
     def forward(self, text, labels=None):
         _, cls_hs = self.model(text['input_ids'], text['attention_mask'])
+        print(cls_hs)
+        quit()
         x = self.fc1(cls_hs)
 
         x = self.relu(x)
