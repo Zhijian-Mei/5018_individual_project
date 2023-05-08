@@ -86,7 +86,7 @@ if __name__ == '__main__':
             ).to(device)
 
             labels = output_.input_ids
-            labels[labels == 0] = -100
+            # labels[labels == 0] = -100
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=labels)
             loss = outputs.loss
