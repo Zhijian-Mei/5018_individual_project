@@ -13,9 +13,8 @@ class MyModel(nn.Module):
         self.dropout = nn.Dropout(0.1)
         self.softmax = nn.LogSoftmax(dim=1)
     def forward(self, text, labels=None):
-        _, cls_hs = self.model(text['input_ids'], text['attention_mask'])
-        print(cls_hs)
-        quit()
+        cls_hs = self.model(text['input_ids'], text['attention_mask']).pooler_output
+
         x = self.fc1(cls_hs)
 
         x = self.relu(x)
