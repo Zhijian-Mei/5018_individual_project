@@ -60,6 +60,17 @@ if __name__ == '__main__':
     epoch = 20
     global_step = 0
 
+
+    def f(x):
+        if 'entailment' in x:
+            return 0
+        elif 'neutral' in x:
+            return 1
+        elif 'contradiction' in x:
+            return 2
+        else:
+            return random.choice([0, 1, 2])
+
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
@@ -90,34 +101,28 @@ if __name__ == '__main__':
 
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=labels)
             loss = outputs.loss
-            print(loss.item())
+            # print(loss.item())
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-            # outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-            #
-            # output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+
+            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+
+            print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
 
             global_step += 1
 
-            if global_step % 300 == 0:
-                break
+            if global_step % 100 == 0:
+                continue
+
 
         model.eval()
         predicts = []
         labels = []
 
 
-        def f(x):
-            if 'entailment' in x:
-                return 0
-            elif 'neutral' in x:
-                return 1
-            elif 'contradiction' in x:
-                return 2
-            else:
-                return random.choice([0, 1, 2])
 
 
         best_accuracy = -np.inf
