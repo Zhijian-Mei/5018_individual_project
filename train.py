@@ -36,6 +36,8 @@ if __name__ == '__main__':
     print(f'Backbone model name: {model_name}')
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
+    print(tokenizer)
+    quit()
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
@@ -68,17 +70,26 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=512,
+                max_length=256,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
                 return_tensors="pt",
             ).to(device)
 
+            output_ = tokenizer.batch_encode_plus(
+                output,
+                max_length=256,
+                pad_to_max_length=True,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            ).input_ids.to(device)
 
-            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output)
+            output_[ output_==0] = -100
+            outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_)
             loss = outputs.loss
-
+            print(loss.item())
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()

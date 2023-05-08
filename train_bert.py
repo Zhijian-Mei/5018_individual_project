@@ -31,6 +31,9 @@ if __name__ == '__main__':
 
     config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
+
+    print(tokenizer)
+    quit()
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     model = BertModel.from_pretrained(model_name).to(device)
     for param in model.parameters():

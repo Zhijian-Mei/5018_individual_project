@@ -10,7 +10,23 @@ def get_data():
     dataset.set_format(columns=["premise", "hypothesis", "label"])
     return dataset
 
+def get_review():
+    dataset = load_dataset('imdb')['train']
+    dataset.set_format(columns=['text','label'])
+    return dataset
+class Spam_dataset(Dataset):
+    def __init__(self):
+        self.dataset = get_review()
+        print(dataset)
+        quit()
+        self.input = []
+        self.output = []
 
+    def __len__(self):
+        return len(self.input)
+
+    def __getitem__(self, idx):
+        return self.input[idx],self.output[idx]
 class MyDataset(Dataset):
     def __init__(self, tokenizer, mode='g',prompt = False):
         self.dataset = get_data()
@@ -27,7 +43,7 @@ class MyDataset(Dataset):
             label = self.labels[i]
             output_ = int(label)
             if self.prompt:
-                input_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is <MASK>'
+                input_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
                 if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is entailment.'
@@ -84,7 +100,5 @@ class testDataset(Dataset):
         return self.input[idx],self.output[idx]
 
 if __name__ == '__main__':
-    train_loader = get_data()
-    for i in train_loader:
-        print(i)
-        quit()
+    dataset = Spam_dataset()
+
