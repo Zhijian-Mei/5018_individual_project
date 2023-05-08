@@ -38,7 +38,7 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=2e-5)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
     print('loading data')
 
