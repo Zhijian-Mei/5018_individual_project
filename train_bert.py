@@ -37,11 +37,6 @@ if __name__ == '__main__':
         output_hidden_states=False,
     ).to(device)
 
-    for param in model.parameters():
-        param.requires_grad = False
-
-    model.classifier.requires_grad = True
-
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     print('loading data')
