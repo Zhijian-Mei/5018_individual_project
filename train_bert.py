@@ -33,7 +33,7 @@ if __name__ == '__main__':
     tokenizer = BertTokenizer.from_pretrained(model_name)
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     model = BertModel.from_pretrained(model_name).to(device)
-    model = MyModel(model,config)
+    model = MyModel(model,config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
