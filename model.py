@@ -14,6 +14,7 @@ class MyModel(nn.Module):
 
         logits = self.project(x)
         print(logits.shape)
+        print(labels.shape)
         quit()
         loss_fct = nn.CrossEntropyLoss()
 
