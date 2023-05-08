@@ -22,11 +22,11 @@ class MyModel(nn.Module):
         x = self.dropout(x)
 
         # output layer
-        x = self.fc2(x)
+        logits = self.fc2(x)
 
         loss_fct = nn.CrossEntropyLoss()
 
         if labels is not None:
-            loss = loss_fct(x, labels)
-            return x, loss
-        return x
+            loss = loss_fct(logits, labels)
+            return logits, loss
+        return logits
