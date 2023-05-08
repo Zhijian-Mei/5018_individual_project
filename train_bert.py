@@ -34,8 +34,6 @@ if __name__ == '__main__':
 
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     model = BertModel.from_pretrained(model_name).to(device)
-    for param in model.parameters():
-        param.required_grad = False
 
     model = MyModel(model,config).to(device)
 
