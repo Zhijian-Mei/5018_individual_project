@@ -85,7 +85,7 @@ class testDataset(Dataset):
             label = self.labels[i]
             output_ = label
             if self.prompt:
-                input_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is <MASK>'
+                input_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
                 if self.mode == 'g':
                     output_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is {label}.'
             else:
