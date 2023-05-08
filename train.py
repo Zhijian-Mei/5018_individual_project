@@ -87,6 +87,7 @@ if __name__ == '__main__':
             print(output_)
             output_[output_ == 0] = -100
             print(output_)
+            quit()
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_)
             loss = outputs.loss
 
