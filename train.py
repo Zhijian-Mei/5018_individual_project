@@ -102,16 +102,16 @@ if __name__ == '__main__':
             outputs = model.generate(**input_)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            print(text)
-            print(list(output))
-            print(output_texts)
-            print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
+            # print(text)
+            # print(list(output))
+            # print(output_texts)
+            # print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
 
             global_step += 1
 
-            if global_step % 1 == 0:
+            if global_step % 300 == 0:
                 break
-        continue
+
         model.eval()
         predicts = []
         labels = []
@@ -131,14 +131,14 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
+            outputs = model.generate(**input_)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
             labels.extend(list(output))
             predicts.extend(output_texts)
-
             print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
+
             # for output_text in output_texts:
             #     if 'entailment' in output_text:
             #         results.append(0)
