@@ -126,8 +126,6 @@ if __name__ == '__main__':
                       ):
             text, output = i[0], i[1]
 
-            labels.extend(list(output))
-
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=128,
@@ -141,7 +139,10 @@ if __name__ == '__main__':
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
+            labels.extend(list(output))
             predicts.extend(output_texts)
+            print(list(output))
+            print(output_texts)
             # for output_text in output_texts:
             #     if 'entailment' in output_text:
             #         results.append(0)
