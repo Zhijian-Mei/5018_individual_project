@@ -84,10 +84,9 @@ if __name__ == '__main__':
                 padding="max_length",
                 return_tensors="pt",
             ).input_ids.to(device)
-            print(output_)
+
             output_[output_ == 0] = -100
-            print(output_)
-            quit()
+
             outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask, labels=output_)
             loss = outputs.loss
 
@@ -95,12 +94,13 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
 
-            # outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-            #
-            # output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
-            # print(logits.argmax(-1).cpu().tolist())
+            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
+            print(output_texts)
+            print(output)
+            
             global_step += 1
 
             # if global_step % 100 == 0:
