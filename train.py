@@ -148,8 +148,8 @@ if __name__ == '__main__':
             #         results.append(2)
             #     else:
             #         results.append(random.choice([0,1,2]))
-            if len(labels) > 500:
-                break
+            # if len(labels) > 500:
+            #     break
         labels = list(map(f, labels))
         predicts = list(map(f, predicts))
 
