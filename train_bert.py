@@ -71,6 +71,7 @@ if __name__ == '__main__':
             preds = torch.argmax(logits, dim=1).float()
             print(preds.tolist())
             print(output.cpu().tolist())
+            print('loss: ', loss.item())
             print()
             loss = loss_fn(logits,output)
 
@@ -82,7 +83,7 @@ if __name__ == '__main__':
 
             if global_step % 500 == 0:
                 break
-            print('loss: ', loss.item())
+
         continue
         model.eval()
         predicts = []
