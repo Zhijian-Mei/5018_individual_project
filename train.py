@@ -65,6 +65,7 @@ if __name__ == '__main__':
             return random.choice([0, 1, 2])
 
 
+    best_accuracy = -np.inf
     for e in range(epoch):
         model.train()
         for i in tqdm(train_loader,
@@ -109,14 +110,13 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 300 == 0:
-                break
+            # if global_step % 300 == 0:
+            #     break
 
         model.eval()
         predicts = []
         labels = []
-
-        best_accuracy = -np.inf
+        accuracy = None
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
             labels.extend(list(output))
             predicts.extend(output_texts)
-            print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
+            # print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
 
             # for output_text in output_texts:
             #     if 'entailment' in output_text:
@@ -156,7 +156,6 @@ if __name__ == '__main__':
         accuracy = round(accuracy_score(labels, predicts), 2)
 
         print(f': accuracy {accuracy} at epoch {e}')
-        quit()
         torch.save({'model': model.state_dict()},
                    f"checkpoint/{model_name}_{accuracy}_epoch{e}_{args.mode}_{args.prompt}.pt")
         if accuracy > best_accuracy:
