@@ -56,7 +56,7 @@ if __name__ == '__main__':
     eval_batch_size = args.batch_size
     train_set, eval_set = torch.utils.data.random_split(dataset, [0.8, 0.2])
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
-    eval_loader = DataLoader(eval_set, batch_size=eval_batch_size)
+    eval_loader = DataLoader(eval_set, batch_size=eval_batch_size,shuffle=False)
 
     epoch = 100
     global_step = 0
@@ -79,7 +79,7 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = i[0], i[1]
-            print(text)
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -111,7 +111,7 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-
+            print(tokenizer.batch_decode(input_.input_ids,skip_special_tokens=True))
             print(list(output))
             print(output_texts)
             print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
