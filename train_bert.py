@@ -14,6 +14,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
+    parser.add_argument('-lr', type=float, default=0.01)
     args = parser.parse_args()
     return args
 
@@ -33,7 +34,7 @@ if __name__ == '__main__':
         output_hidden_states = False,
     ).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-3)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     print('loading data')
 
