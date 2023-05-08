@@ -29,9 +29,11 @@ if __name__ == '__main__':
 
     model_name = 'bert-base-uncased'
 
-
+    config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
-    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
+    # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
+    model = BertModel.from_pretrained(model_name).to(device)
+    model = MyModel(model,config)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
@@ -64,7 +66,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            outputs = model(**input_,labels=output)
+            outputs = model(input_,labels=output)
             logits = outputs.logits
             loss = outputs.loss
             preds = torch.argmax(logits, dim=1).float()

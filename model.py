@@ -13,7 +13,8 @@ class MyModel(nn.Module):
         x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state
 
         logits = self.project(x)
-
+        print(logits.shape)
+        quit()
         loss_fct = nn.CrossEntropyLoss()
 
         if labels is not None:
