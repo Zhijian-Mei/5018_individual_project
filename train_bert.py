@@ -34,7 +34,7 @@ if __name__ == '__main__':
     internal_model = BertModel.from_pretrained(
         model_name,
     ).to(device)
-    model = MyModel(internal_model,config)
+    model = MyModel(internal_model,config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
