@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig,BertForSequenceClassification
+from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig,
 from torch import cuda, nn
 from data_util import *
 from sklearn.metrics import accuracy_score
