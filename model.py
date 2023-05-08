@@ -7,14 +7,27 @@ class MyModel(nn.Module):
         super().__init__()
         self.model = bert
         self.num_labels = 3
-        self.project0 = nn.Linear(length,1)
-        self.project1 = nn.Linear(config.hidden_size, self.num_labels)
-
+        self.fc1 = nn.Linear(config.hidden_size,512)
+        self.fc2 = nn.Linear(512, self.num_labels)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(0.1)
+        self.softmax = nn.LogSoftmax(dim=1)
     def forward(self, text, labels=None):
-        x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state
-        x = x.reshape((x.shape[0],x.shape[2],x.shape[1]))
-        x = self.project0(x).squeeze()
-        logits = self.project1(x)
+        _, cls_hs = self.model(text['input_ids'], text['attention_mask'])
+        x = self.fc1(cls_hs)
+
+        x = self.relu(x)
+
+        x = self.dropout(x)
+
+        # output layer
+        x = self.fc2(x)
+
+        # apply softmax activation
+        x = self.softmax(x)
+        print(x.shape)
+        quit()
+        return x
 
         loss_fct = nn.CrossEntropyLoss()
 
