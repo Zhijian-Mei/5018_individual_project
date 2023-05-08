@@ -24,14 +24,9 @@ class MyModel(nn.Module):
         # output layer
         x = self.fc2(x)
 
-        # apply softmax activation
-
         loss_fct = nn.CrossEntropyLoss()
-        print(x)
-        print(labels)
+
         if labels is not None:
             loss = loss_fct(x, labels)
-            print(loss)
-            quit()
             return x, loss
         return x

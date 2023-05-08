@@ -71,7 +71,7 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_,labels=output)
-
+            print(loss.item())
             # preds = torch.argmax(logits, dim=1).float()
 
             optimizer.zero_grad()
