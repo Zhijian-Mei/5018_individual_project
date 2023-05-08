@@ -14,7 +14,7 @@ class MyModel(nn.Module):
 
         logits = self.project(x)
 
-        loss_fct = nn.CrossEntropyLoss()
+        loss_fct = nn.BCEWithLogitsLoss()
 
         if labels is not None:
             loss = loss_fct(logits, labels)
