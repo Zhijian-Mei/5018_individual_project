@@ -64,7 +64,9 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            logits,loss = model(**input_,labels=output)
+            outputs = model(**input_,labels=output)
+            logits = outputs.logits
+            loss = outputs.loss
             preds = torch.argmax(logits, dim=1).float()
             print(preds.tolist())
             print(output.cpu().tolist())
