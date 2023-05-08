@@ -35,18 +35,10 @@ if __name__ == '__main__':
     model_name = 't5-small'
     print(f'Backbone model name: {model_name}')
 
+    model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
-    # model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
-
     optimizer = torch.optim.AdamW(model.parameters(), lr=2e-3)
-    # inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
-    # print(inputs['input_ids'].shape)
-    # outputs = model(**inputs)
-    #
-    # last_hidden_states = outputs.last_hidden_state
-    # print(last_hidden_states.shape)
 
     print('loading data')
 
@@ -101,8 +93,7 @@ if __name__ == '__main__':
             labels = output_.input_ids
             labels[labels == 0] = -100
 
-            outputs = model(**input_, labels=labels)
-            loss = outputs.loss
+            loss = model(**input_, labels=labels).loss
             # print(loss.item())
             optimizer.zero_grad()
             loss.backward()
