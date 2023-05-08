@@ -14,7 +14,7 @@ class MyModel(nn.Module):
         x = self.model(text['input_ids'], text['attention_mask']).last_hidden_state
         x = x.reshape((x.shape[0],x.shape[2],x.shape[1]))
         x = self.project0(x).squeeze()
-        logits = self.project(x)
+        logits = self.project1(x)
         print(logits.shape)
         print(labels.shape)
         quit()
