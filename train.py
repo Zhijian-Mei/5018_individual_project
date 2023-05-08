@@ -110,8 +110,8 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            print(list(map(f, list(output))))
-            print(list(map(f, output_texts)))
+            print(list(output))
+            print(output_texts)
             print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
 
             global_step += 1
