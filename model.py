@@ -10,7 +10,7 @@ class MyModel(nn.Module):
         self.fc2 = nn.Linear(512, self.num_labels)
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(0.1)
-        self.softmax = nn.LogSoftmax(dim=1)
+        # self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, text, labels=None):
         cls_hs = self.model(text['input_ids'], text['attention_mask']).pooler_output
@@ -25,7 +25,6 @@ class MyModel(nn.Module):
         x = self.fc2(x)
 
         # apply softmax activation
-        x = self.softmax(x)
 
         loss_fct = nn.CrossEntropyLoss()
         print(x)
