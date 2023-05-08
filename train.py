@@ -79,7 +79,7 @@ if __name__ == '__main__':
                       mininterval=200
                       ):
             text, output = i[0], i[1]
-
+            print(text)
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -111,7 +111,7 @@ if __name__ == '__main__':
             outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
 
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            print(text)
+
             print(list(output))
             print(output_texts)
             print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
