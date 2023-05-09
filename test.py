@@ -104,10 +104,10 @@ if __name__ == '__main__':
         output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
         predicts.extend(output_texts)
-        print(output_texts)
-        print(output)
-        print(list(map(f, output_texts)))
-        print(list(map(f, output)))
+        # print(output_texts)
+        # print(output)
+        # print(list(map(f, output_texts)))
+        # print(list(map(f, output)))
 
 
     labels = list(map(f, labels))
