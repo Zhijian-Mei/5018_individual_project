@@ -74,7 +74,7 @@ if __name__ == '__main__':
             logits = model_output.logits
             print(loss.item())
             epoch_loss += loss.item()
-            preds = torch.argmax(logits, dim=1).float()
+            preds = torch.argmax(logits, dim=1)
             print(preds)
             print(output)
             optimizer.zero_grad()
