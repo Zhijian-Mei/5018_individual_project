@@ -89,7 +89,7 @@ if __name__ == '__main__':
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
-            text, output = i[0], i[1]
+            text, output = i[0], i[1].to(device)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
