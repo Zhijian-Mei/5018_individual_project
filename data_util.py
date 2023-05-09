@@ -42,7 +42,7 @@ class MyDataset(Dataset):
         self.output = []
         for i in trange(len(self.premises)):
             premise = self.premises[i]
-            hypothesis = self.premises[i]
+            hypothesis = self.hypothesises[i]
             label = self.labels[i]
             output_ = int(label)
             if self.prompt:
@@ -85,7 +85,7 @@ class testDataset(Dataset):
         self.output = []
         for i in range(len(self.premises)):
             premise = self.premises[i]
-            hypothesis = self.premises[i]
+            hypothesis = self.hypothesises[i]
             label = self.labels[i]
             output_ = label
             if self.prompt:
