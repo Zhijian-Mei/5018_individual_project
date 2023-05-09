@@ -99,5 +99,6 @@ class testDataset(Dataset):
         return self.input[idx],self.output[idx]
 
 if __name__ == '__main__':
-    dataset = Spam_dataset()
+    dataset = get_data()
+    print(dataset)
 
