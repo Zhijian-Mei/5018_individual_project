@@ -22,6 +22,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
+    parser.add_argument('-lr', type=float, default=1e-5)
     args = parser.parse_args()
     return args
 
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-6)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
     print('loading data')
 
