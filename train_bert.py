@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,label=output)
+            model_output = model(**input_,labels=output)
             logits = model_output.logits
             loss = model_output.loss
             preds = torch.argmax(logits, dim=1)
