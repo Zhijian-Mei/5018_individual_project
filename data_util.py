@@ -40,6 +40,10 @@ class MyDataset(Dataset):
             premise = self.premises[i]
             hypothesis = self.premises[i]
             label = self.labels[i]
+            print(premise)
+            print(hypothesis)
+            print(label)
+            quit()
             output_ = int(label)
             if self.prompt:
                 input_ = f'mnli: premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
@@ -62,6 +66,7 @@ class MyDataset(Dataset):
 
             self.input.append(input_)
             self.output.append(output_)
+        assert len(self.input) == len(self.output)
 
     def __len__(self):
         return len(self.input)
