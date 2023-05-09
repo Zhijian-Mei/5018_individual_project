@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,labels=output)
+            model_output = model(**input_,labels=output,return_dict=True)
             loss = model_output.loss
             logits = model.logits
             print(loss.item())
