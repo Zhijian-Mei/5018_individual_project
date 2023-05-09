@@ -9,6 +9,7 @@ from data_util import *
 from sklearn.metrics import accuracy_score
 from model import *
 from sklearn.utils.class_weight import compute_class_weight
+import torch.nn.functional as F
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -58,8 +59,10 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       # mininterval=200
                       ):
-            text, output = i[0], i[1].to(device)
-
+            text, output = i[0], i[1]
+            labels = F.one_hot(output)
+            print(labels)
+            quit()
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
