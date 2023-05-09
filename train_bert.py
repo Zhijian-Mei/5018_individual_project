@@ -54,6 +54,7 @@ if __name__ == '__main__':
     loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
         model.train()
+        epoch_loss = 0
         for i in tqdm(train_loader,
                       mininterval=200
                       ):
@@ -70,6 +71,7 @@ if __name__ == '__main__':
 
             loss = model(**input_,labels=output).loss
             print(loss.item())
+            epoch_loss += loss.item()
             # preds = torch.argmax(logits, dim=1).float()
 
             optimizer.zero_grad()
@@ -81,7 +83,7 @@ if __name__ == '__main__':
             # if global_step % 2 == 0:
             #     break
 
-
+        print(f'loss at epoch {e}: {epoch_loss}')
         model.eval()
         predicts = []
         labels = []
