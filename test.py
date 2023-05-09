@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     ## load fine-tuned checkpoint
 
-    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_0.pt')
+    checkpoint = torch.load('checkpoint/best_t5-small_epoch10_0.8_g_0.pt')
     model.load_state_dict(checkpoint['model'])
 
     predicts = []
@@ -99,7 +99,7 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask,do_sample=False)
+        outputs = model.generate(**input_,do_sample=False)
 
         output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        outputs = model.generate(input_ids=input_.input_ids, attention_mask=input_.attention_mask,do_sample=False)
+        outputs = model.generate(**input_,do_sample=False)
 
         output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
