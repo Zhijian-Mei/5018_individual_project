@@ -60,7 +60,7 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            labels = F.one_hot(output).to(device)
+            labels = F.one_hot(output).float().to(device)
 
             input_ = tokenizer.batch_encode_plus(
                 text,
