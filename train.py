@@ -142,10 +142,10 @@ if __name__ == '__main__':
 
             labels.extend(list(output))
             predicts.extend(output_texts)
-            print(text)
-            print(list(output))
-            print(output_texts)
-            print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
+            # print(text)
+            # print(list(output))
+            # print(output_texts)
+            # print(round(accuracy_score(list(map(f, list(output))), list(map(f, output_texts))), 2))
 
             # for output_text in output_texts:
             #     if 'entailment' in output_text:
