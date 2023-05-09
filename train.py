@@ -71,6 +71,7 @@ if __name__ == '__main__':
     best_accuracy = -np.inf
     for e in range(epoch):
         model.train()
+        epoch_loss = 0
         for i in tqdm(train_loader,
                       # mininterval=200
                       ):
@@ -98,6 +99,7 @@ if __name__ == '__main__':
             labels[labels == 0] = -100
 
             loss = model(**input_, labels=labels).loss
+            epoch_loss += loss.item()
             # print(loss.item())
             optimizer.zero_grad()
             loss.backward()
@@ -115,6 +117,7 @@ if __name__ == '__main__':
         #     if global_step % 1 == 0:
         #         break
         # continue
+        print(f'loss at epoch {e}: {epoch_loss}')
         model.eval()
         predicts = []
         labels = []
