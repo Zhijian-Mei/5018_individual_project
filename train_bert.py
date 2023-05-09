@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig
+from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig, BertForSequenceClassification
 from torch import cuda, nn
 from data_util import *
 from sklearn.metrics import accuracy_score
@@ -32,10 +32,10 @@ if __name__ == '__main__':
     config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
 
-    # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
-    model = BertModel.from_pretrained(model_name).to(device)
+    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
+    # model = BertModel.from_pretrained(model_name).to(device)
 
-    model = MyModel(model,config).to(device)
+    # model = MyModel(model,config).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
@@ -68,8 +68,8 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            logits, loss = model(input_,labels=output)
-            # print(loss.item())
+            loss = model(**input_,labels=output).loss
+            print(loss.item())
             # preds = torch.argmax(logits, dim=1).float()
 
             optimizer.zero_grad()
@@ -100,7 +100,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            logits, loss = model(input_,labels=output)
+            logits = model(**input_).logits
 
             preds = torch.argmax(logits, dim=1).float()
 
