@@ -102,8 +102,4 @@ if __name__ == '__main__':
     dataset = get_data()
     print(dataset)
     labels = dataset['label']
-    def f(x):
-        if x == 0:
-            return x
-    count_0 = list(map(f,labels))
-    print(count_0)
+    label0 = list(filter(lambda x:x==0,labels))
