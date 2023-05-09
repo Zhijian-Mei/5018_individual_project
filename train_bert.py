@@ -73,7 +73,7 @@ if __name__ == '__main__':
             logits = model_output.logits
 
             preds = torch.argmax(logits, dim=1)
-            loss = loss_fn(preds,output)
+            loss = loss_fn(logits,output)
             epoch_loss += loss.item()
             print(loss.item())
             print(preds)

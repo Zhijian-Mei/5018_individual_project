@@ -15,17 +15,7 @@ def get_review():
     dataset = load_dataset('imdb')['train']
     dataset.set_format(columns=['text','label'])
     return dataset
-class Spam_dataset(Dataset):
-    def __init__(self):
-        self.dataset = get_review()
-        self.input = []
-        self.output = []
 
-    def __len__(self):
-        return len(self.input)
-
-    def __getitem__(self, idx):
-        return self.input[idx],self.output[idx]
 class MyDataset(Dataset):
     def __init__(self, tokenizer, mode='g',prompt = False):
         self.dataset = get_data()
