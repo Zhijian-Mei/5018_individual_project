@@ -69,9 +69,9 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,labels=output,return_dict=True)
+            model_output = model(**input_,labels=output)
             loss = model_output.loss
-            logits = model.logits
+            logits = model_output.logits
             print(loss.item())
             epoch_loss += loss.item()
             preds = torch.argmax(logits, dim=1).float()
