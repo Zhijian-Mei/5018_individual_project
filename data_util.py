@@ -42,7 +42,7 @@ class MyDataset(Dataset):
             label = self.labels[i]
             output_ = int(label)
             if self.prompt:
-                input_ = f'NLI: premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
+                input_ = f'mnli: premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
                 if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is entailment.'
@@ -51,7 +51,7 @@ class MyDataset(Dataset):
                     elif int(label) == 2:
                         output_ = f'premise: {premise}, hypothesis: {hypothesis}, the relation is contradiction.'
             else:
-                input_ = f'NLI:  premise: {premise} hypothesis: {hypothesis}'
+                input_ = f'mnli:  premise: {premise} hypothesis: {hypothesis}'
                 if self.mode == 'g':
                     if int(label) == 0:
                         output_ = f'entailment'
