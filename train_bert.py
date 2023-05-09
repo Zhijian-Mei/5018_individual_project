@@ -32,7 +32,7 @@ if __name__ == '__main__':
     config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
 
-    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
+    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3,problem_type="multi_label_classification").to(device)
     # model = BertModel.from_pretrained(model_name).to(device)
 
     # model = MyModel(model,config).to(device)
@@ -69,11 +69,11 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_)
+            model_output = model(**input_,label=output)
             logits = model_output.logits
-
+            loss = model_output.loss
             preds = torch.argmax(logits, dim=1)
-            loss = loss_fn(logits,output)
+
             epoch_loss += loss.item()
             print(loss.item())
             print(preds)
