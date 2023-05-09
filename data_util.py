@@ -45,11 +45,11 @@ class MyDataset(Dataset):
                 input_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is [MASK]'
                 if self.mode == 'g':
                     if int(label) == 0:
-                        output_ = f'premise: {premise} hypothesis: {hypothesis} the relation is entailment.'
+                        output_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is entailment.'
                     elif int(label) == 1:
-                        output_ = f'premise: {premise} hypothesis: {hypothesis} the relation is neutral.'
+                        output_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is neutral.'
                     elif int(label) == 2:
-                        output_ = f'premise: {premise} hypothesis: {hypothesis} the relation is contradiction.'
+                        output_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is contradiction.'
             else:
                 input_ = f'mnli:  premise: {premise} hypothesis: {hypothesis}'
                 if self.mode == 'g':
@@ -85,11 +85,11 @@ class testDataset(Dataset):
             label = self.labels[i]
             output_ = label
             if self.prompt:
-                input_ = f'NLI: premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
+                input_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is [MASK]'
                 if self.mode == 'g':
-                    output_ = f'NLI: premise: {premise}, hypothesis: {hypothesis}, the relation is {label}.'
+                    output_ = f'mnli: premise: {premise} hypothesis: {hypothesis} the relation is {label}.'
             else:
-                input_ = f'NLI: premise: {premise} hypothesis: {hypothesis}'
+                input_ = f'mnli: premise: {premise} hypothesis: {hypothesis}'
             self.input.append(input_)
             self.output.append(output_)
 
