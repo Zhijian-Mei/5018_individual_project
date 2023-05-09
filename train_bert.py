@@ -60,9 +60,8 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            labels = F.one_hot(output)
-            print(labels)
-            quit()
+            labels = F.one_hot(output).to(device)
+
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
@@ -72,7 +71,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,labels=output)
+            model_output = model(**input_,labels=labels)
             logits = model_output.logits
             loss = model_output.loss
             preds = torch.argmax(logits, dim=1)
