@@ -101,4 +101,5 @@ class testDataset(Dataset):
 if __name__ == '__main__':
     dataset = get_data()
     print(dataset)
-
+    labels = dataset['label']
+    print(labels)
