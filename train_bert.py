@@ -56,7 +56,7 @@ if __name__ == '__main__':
         model.train()
         epoch_loss = 0
         for i in tqdm(train_loader,
-                      mininterval=200
+                      # mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
 
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         labels = []
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
-                      mininterval=200
+                      # mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
 
