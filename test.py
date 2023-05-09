@@ -113,9 +113,12 @@ if __name__ == '__main__':
     labels = list(map(f, labels))
     predicts = list(map(f, predicts))
 
+
     accuracy = round(accuracy_score(labels, predicts), 2)
     print(f': accuracy {accuracy} for match_dataset')
 
+    labels = []
+    predicts = []
     for i in tqdm(mismatched_dataLoader):
         text, output = i[0], i[1]
 
