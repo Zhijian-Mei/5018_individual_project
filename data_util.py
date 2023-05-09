@@ -105,5 +105,5 @@ if __name__ == '__main__':
     def f(x):
         if x == 0:
             return x
-    count_0 = map(f,labels)
+    count_0 = list(map(f,labels))
     print(count_0)
