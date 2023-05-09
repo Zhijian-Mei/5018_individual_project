@@ -53,7 +53,7 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(eval_set, batch_size=eval_batch_size,shuffle=False)
 
-    epoch = 3
+    epoch = 5
     global_step = 0
 
 
