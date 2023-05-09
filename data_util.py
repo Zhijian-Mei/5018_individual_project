@@ -32,6 +32,10 @@ class MyDataset(Dataset):
         self.premises = self.dataset['premise']
         self.hypothesises = self.dataset['hypothesis']
         self.labels = self.dataset['label']
+        print(self.premises[1])
+        print(self.hypothesises[1])
+        print(self.labels[1])
+        quit()
         self.mode = mode
         self.prompt = prompt
         self.input = []
@@ -40,10 +44,6 @@ class MyDataset(Dataset):
             premise = self.premises[i]
             hypothesis = self.premises[i]
             label = self.labels[i]
-            print(premise)
-            print(hypothesis)
-            print(label)
-            quit()
             output_ = int(label)
             if self.prompt:
                 input_ = f'mnli: premise: {premise}, hypothesis: {hypothesis}, the relation is [MASK]'
