@@ -103,4 +103,6 @@ if __name__ == '__main__':
     print(dataset)
     labels = dataset['label']
     label0 = list(filter(lambda x:x==0,labels))
-    print(len(label0))
+    label1 = list(filter(lambda x: x == 1, labels))
+    label2 = list(filter(lambda x: x == 2, labels))
+    print(len(label0),len(label1),len(label2))
