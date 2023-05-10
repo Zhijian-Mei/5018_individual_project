@@ -13,7 +13,9 @@ class MyModel(nn.Module):
 
     def forward(self, text, labels=None):
         output = self.model(text['input_ids'], text['attention_mask'])
-        print(output)
+        last_hidden_state = output[0]
+        cls_hs = output[1]
+        print(last_hidden_state.shape)
         quit()
         x = self.dropout(cls_hs)
         logits = self.fc(x)
