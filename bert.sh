@@ -1,6 +1,6 @@
 export TASK_NAME=mnli
 
-python run_glue.py \
+python mnli_train.py \
   --model_name_or_path bert-base-uncased \
   --task_name $TASK_NAME \
   --do_train \
