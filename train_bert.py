@@ -60,8 +60,9 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
-
-
+            print(text)
+            print(output)
+            quit()
             input_ = tokenizer.batch_encode_plus(
                 text,
                 max_length=256,
