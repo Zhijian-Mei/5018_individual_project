@@ -33,7 +33,7 @@ if __name__ == '__main__':
     config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
 
-    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3,problem_type="multi_label_classification").to(device)
+    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     # model = BertModel.from_pretrained(model_name).to(device)
 
     # model = MyModel(model,config).to(device)
@@ -60,7 +60,9 @@ if __name__ == '__main__':
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
-            labels = F.one_hot(output).float().to(device)
+            print(text)
+            print(output)
+            quit()
 
             input_ = tokenizer.batch_encode_plus(
                 text,
