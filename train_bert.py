@@ -94,7 +94,7 @@ if __name__ == '__main__':
         predicts = []
         labels = []
         best_accuracy = -np.inf
-        for i in tqdm(eval_loader,
+        for i in tqdm(train_loader,
                       # mininterval=200
                       ):
             text, output = i[0], i[1].to(device)
