@@ -509,9 +509,7 @@ def main():
         data_collator = DataCollatorWithPadding(tokenizer, pad_to_multiple_of=8)
     else:
         data_collator = None
-    print(train_dataset)
-    print(eval_dataset)
-    quit()
+
     # Initialize our Trainer
     trainer = Trainer(
         model=model,
