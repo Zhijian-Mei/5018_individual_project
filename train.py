@@ -18,11 +18,11 @@ from transformers import AutoTokenizer, T5ForConditionalGeneration
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=16)
+    parser.add_argument('-batch_size', type=int, default=32)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
-    parser.add_argument('-lr', type=float, default=1e-5)
+    parser.add_argument('-lr', type=float, default=2e-5)
     args = parser.parse_args()
     return args
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
             output_ = tokenizer.batch_encode_plus(
                 output,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
