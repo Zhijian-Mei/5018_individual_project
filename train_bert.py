@@ -71,7 +71,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            loss,logits = model(input_ ,labels=output)
+            logits, loss = model(input_ ,labels=output)
 
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
