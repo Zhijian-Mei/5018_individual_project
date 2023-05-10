@@ -6,23 +6,15 @@ class MyModel(nn.Module):
         super().__init__()
         self.model = bert
         self.num_labels = 3
-        self.fc1 = nn.Linear(config.hidden_size, 512)
-        self.fc2 = nn.Linear(512, self.num_labels)
+        self.fc = nn.Linear(config.hidden_size, self.num_labels)
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(0.1)
         # self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, text, labels=None):
         cls_hs = self.model(text['input_ids'], text['attention_mask']).pooler_output
-
-        x = self.fc1(cls_hs)
-
-        x = self.relu(x)
-
-        x = self.dropout(x)
-
-        # output layer
-        logits = self.fc2(x)
+        x = self.dropout(cls_hs)
+        logits = self.fc(x)
 
         loss_fct = nn.CrossEntropyLoss()
 
