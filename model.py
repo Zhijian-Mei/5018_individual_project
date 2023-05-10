@@ -12,8 +12,8 @@ class MyModel(nn.Module):
         # self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, text, labels=None):
-        last_hidden,cls_hs = self.model(text['input_ids'], text['attention_mask'])
-        print(last_hidden.shape)
+        output = self.model(text['input_ids'], text['attention_mask'])
+        print(output)
         quit()
         x = self.dropout(cls_hs)
         logits = self.fc(x)
