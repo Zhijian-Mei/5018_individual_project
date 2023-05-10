@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     epoch = 1000
     global_step = 0
-    loss_fn = nn.CrossEntropyLoss(reduction='sum')
+    loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
         model.train()
         epoch_loss = 0
