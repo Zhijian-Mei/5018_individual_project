@@ -73,6 +73,9 @@ if __name__ == '__main__':
 
             model_output = model(**input_,labels=output)
             logits = model_output.logits
+            print(logits.shape)
+            print(output.shape)
+            quit()
             loss = model_output.loss
             preds = torch.argmax(logits, dim=1)
 
