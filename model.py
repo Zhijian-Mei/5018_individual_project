@@ -12,7 +12,9 @@ class MyModel(nn.Module):
         # self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, text, labels=None):
-        cls_hs = self.model(text['input_ids'], text['attention_mask']).pooler_output
+        last_hidden,cls_hs = self.model(text['input_ids'], text['attention_mask'])
+        print(last_hidden.shape)
+        quit()
         x = self.dropout(cls_hs)
         logits = self.fc(x)
 
