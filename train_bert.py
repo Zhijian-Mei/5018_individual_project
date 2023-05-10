@@ -71,8 +71,8 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_ ,labels=output)
-            # print(logits)
-            # print(output)
+            print(logits)
+            print(output)
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       # mininterval=200
                       ):
-            text, output = i[0], i[1].to(device)
+            text, output = i[0], i[1]
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -112,7 +112,7 @@ if __name__ == '__main__':
 
             logits = model(input_)
 
-            preds = torch.argmax(logits, dim=1).float()
+            preds = torch.argmax(logits, dim=1)
 
             labels.extend(output.tolist())
             predicts.extend(preds.tolist())
