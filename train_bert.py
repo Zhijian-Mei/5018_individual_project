@@ -11,6 +11,7 @@ from model import *
 from sklearn.utils.class_weight import compute_class_weight
 import torch.nn.functional as F
 
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-batch_size', type=int, default=16)
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     bert = BertModel.from_pretrained(model_name).to(device)
 
-    model = MyModel(bert,config).to(device)
+    model = MyModel(bert, config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
 
     epoch = 1000
     global_step = 0
-    loss_fn = nn.CrossEntropyLoss()
+    loss_fn = nn.CrossEntropyLoss(reduction='sum')
     for e in range(epoch):
         model.train()
         epoch_loss = 0
@@ -70,7 +71,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            logits, loss = model(input_ ,labels=output)
+            logits, loss = model(input_, labels=output)
             print(logits)
             print(output)
             # logits = model_output.logits
