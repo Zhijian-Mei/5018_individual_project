@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 1 == 0:
+            if global_step % 2 == 0:
                 break
         continue
         print(f'loss at epoch {e}: {epoch_loss}')
