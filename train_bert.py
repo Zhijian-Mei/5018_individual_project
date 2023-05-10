@@ -59,10 +59,8 @@ if __name__ == '__main__':
         for i in tqdm(train_loader,
                       # mininterval=200
                       ):
-            text, output = i[0], i[1]
-            print(text)
-            print(output)
-            quit()
+            text, output = i[0], i[1].to(device)
+
 
             input_ = tokenizer.batch_encode_plus(
                 text,
@@ -73,7 +71,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,labels=labels)
+            model_output = model(**input_,labels=output)
             logits = model_output.logits
             loss = model_output.loss
             preds = torch.argmax(logits, dim=1)
