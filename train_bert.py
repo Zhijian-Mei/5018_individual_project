@@ -71,18 +71,16 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_,labels=output)
+            model_output = model(**input_)
             logits = model_output.logits
-            print(logits)
-            print(output)
-            quit()
-            loss = model_output.loss
-            preds = torch.argmax(logits, dim=1)
+            loss = loss_fn(logits,output)
+
+            # preds = torch.argmax(logits, dim=1)
 
             epoch_loss += loss.item()
             print(loss.item())
-            print(preds)
-            print(output)
+            # print(preds)
+            # print(output)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
