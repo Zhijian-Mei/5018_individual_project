@@ -11,11 +11,6 @@ def get_data():
     dataset = dataset[:2000]
     return dataset
 
-def get_review():
-    dataset = load_dataset('imdb')['train']
-    dataset.set_format(columns=['text','label'])
-    return dataset
-
 class MyDataset(Dataset):
     def __init__(self, tokenizer, mode='g',prompt = False):
         self.dataset = get_data()

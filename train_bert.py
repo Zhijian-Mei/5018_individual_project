@@ -3,7 +3,8 @@ import argparse
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig
+from transformers import BertModel, AutoTokenizer, BertTokenizer, BertConfig, AutoConfig, RobertaModel, \
+    RobertaTokenizer, RobertaConfig
 from torch import cuda, nn
 from data_util import *
 from sklearn.metrics import accuracy_score
@@ -29,13 +30,13 @@ if __name__ == '__main__':
     gpu = args.gpu
     device = torch.device(f'cuda:{gpu}' if cuda.is_available() else 'cpu')
 
-    model_name = 'bert-base-uncased'
+    model_name = 'roberta-base'
 
-    config = BertConfig.from_pretrained(model_name)
-    tokenizer = BertTokenizer.from_pretrained(model_name)
+    config = RobertaConfig.from_pretrained(model_name)
+    tokenizer = RobertaTokenizer.from_pretrained(model_name)
 
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
-    bert = BertModel.from_pretrained(model_name).to(device)
+    bert = RobertaModel.from_pretrained(model_name).to(device)
 
     model = MyModel(bert, config).to(device)
 
