@@ -71,8 +71,8 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_ ,labels=output)
-            print(logits)
-            print(output)
+            # print(logits)
+            # print(output)
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
 
@@ -88,9 +88,9 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            if global_step % 2 == 0:
-                break
-        continue
+            # if global_step % 2 == 0:
+            #     break
+        # continue
         print(f'loss at epoch {e}: {epoch_loss}')
         model.eval()
         predicts = []
