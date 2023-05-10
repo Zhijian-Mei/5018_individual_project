@@ -50,7 +50,7 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(eval_set, batch_size=eval_batch_size)
 
-    epoch = 3
+    epoch = 1000
     global_step = 0
     loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
@@ -71,7 +71,8 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_ ,labels=output)
-
+            print(logits)
+            print(output)
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
 
@@ -87,9 +88,9 @@ if __name__ == '__main__':
 
             global_step += 1
 
-            # if global_step % 2 == 0:
-            #     break
-
+            if global_step % 1 == 0:
+                break
+        continue
         print(f'loss at epoch {e}: {epoch_loss}')
         model.eval()
         predicts = []
