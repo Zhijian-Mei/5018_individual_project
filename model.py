@@ -20,10 +20,8 @@ class MyModel(nn.Module):
         cls_hs = output[1]
         x = self.fc1(last_hidden_state).squeeze()
         x = self.fc2(x)
-        x = self.dropout(x)
-        print(x.shape)
-        quit()
-        logits = self.fc(x)
+        logits = self.dropout(x)
+        # logits = self.fc(x)
 
         loss_fct = nn.CrossEntropyLoss()
 
