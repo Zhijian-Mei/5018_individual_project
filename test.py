@@ -92,7 +92,7 @@ if __name__ == '__main__':
         labels.extend(list(output))
         input_ = tokenizer.batch_encode_plus(
             text,
-            max_length=256,
+            max_length=128,
             pad_to_max_length=True,
             truncation=True,
             padding="max_length",
@@ -125,7 +125,7 @@ if __name__ == '__main__':
         labels.extend(list(output))
         input_ = tokenizer.batch_encode_plus(
             text,
-            max_length=256,
+            max_length=128,
             pad_to_max_length=True,
             truncation=True,
             padding="max_length",
