@@ -14,11 +14,11 @@ import torch.nn.functional as F
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=16)
+    parser.add_argument('-batch_size', type=int, default=32)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
-    parser.add_argument('-lr', type=float, default=1e-4)
+    parser.add_argument('-lr', type=float, default=2e-5)
     args = parser.parse_args()
     return args
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     for param in bert.parameters():
         param.required_grad = False
-        
+
     model = MyModel(bert, config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_set, batch_size=train_batch_size, shuffle=False)
     eval_loader = DataLoader(eval_set, batch_size=eval_batch_size)
 
-    epoch = 1000
+    epoch = 5
     global_step = 0
     loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
@@ -75,8 +75,7 @@ if __name__ == '__main__':
             ).to(device)
 
             logits, loss = model(input_, labels=output)
-            print(logits)
-            print(output)
+
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
 
@@ -100,14 +99,14 @@ if __name__ == '__main__':
         predicts = []
         labels = []
         best_accuracy = -np.inf
-        for i in tqdm(train_loader,
+        for i in tqdm(eval_loader,
                       # mininterval=200
                       ):
             text, output = i[0], i[1]
 
             input_ = tokenizer.batch_encode_plus(
                 text,
-                max_length=256,
+                max_length=128,
                 pad_to_max_length=True,
                 truncation=True,
                 padding="max_length",
