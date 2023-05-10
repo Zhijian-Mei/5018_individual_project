@@ -61,7 +61,7 @@ if __name__ == '__main__':
         model.train()
         epoch_loss = 0
         for i in tqdm(train_loader,
-                      # mininterval=200
+                      mininterval=200
                       ):
             text, output = i[0], i[1].long().to(device)
 
@@ -82,7 +82,7 @@ if __name__ == '__main__':
             # preds = torch.argmax(logits, dim=1)
 
             epoch_loss += loss.item()
-            print(loss.item())
+            # print(loss.item())
             # print(preds)
             # print(output)
             optimizer.zero_grad()
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         labels = []
         best_accuracy = -np.inf
         for i in tqdm(eval_loader,
-                      # mininterval=200
+                      mininterval=200
                       ):
             text, output = i[0], i[1]
 
