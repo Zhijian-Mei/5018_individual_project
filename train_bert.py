@@ -33,12 +33,12 @@ if __name__ == '__main__':
     config = BertConfig.from_pretrained(model_name)
     tokenizer = BertTokenizer.from_pretrained(model_name)
 
-    model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
-    # model = BertModel.from_pretrained(model_name).to(device)
+    # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
+    bert = BertModel.from_pretrained(model_name).to(device)
 
-    # model = MyModel(model,config).to(device)
+    model = MyModel(bert,config).to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
     print('loading data')
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            model_output = model(**input_)
+            model_output = model(input_)
             logits = model_output.logits
             loss = loss_fn(logits,output)
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 return_tensors="pt",
             ).to(device)
 
-            logits = model(**input_).logits
+            logits = model(input_)
 
             preds = torch.argmax(logits, dim=1).float()
 
