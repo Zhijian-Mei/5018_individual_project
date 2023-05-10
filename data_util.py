@@ -8,7 +8,7 @@ from tqdm import trange
 def get_data():
     dataset = load_dataset('multi_nli')['train']
     dataset.set_format(columns=["premise", "hypothesis", "label"])
-    dataset = dataset[:50]
+    dataset = dataset[:2500]
     return dataset
 
 def get_review():
