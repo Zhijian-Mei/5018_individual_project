@@ -16,7 +16,9 @@ class MyModel(nn.Module):
 
     def forward(self, text, labels=None):
         output = self.model(text['input_ids'], text['attention_mask'])
-        cls_hs = output[1]
+        cls_hs = output.last_hidden_state
+        print(cls_hs.shape)
+        quit()
         logits = self.fc(self.dropout(cls_hs))
 
         loss_fct = nn.CrossEntropyLoss()
