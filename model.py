@@ -27,6 +27,6 @@ class MyModel(nn.Module):
         loss_fct = nn.CrossEntropyLoss()
 
         if labels is not None:
-            loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+            loss = loss_fct(logits, labels)
             return logits, loss
         return logits

@@ -72,7 +72,7 @@ if __name__ == '__main__':
             ).to(device)
 
             loss,logits = model(input_ ,labels=output)
-            
+
             # logits = model_output.logits
             # loss = loss_fn(logits,output)
 
