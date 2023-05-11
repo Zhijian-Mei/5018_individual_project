@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     for i in tqdm(matched_dataLoader):
         text, output = i[0], i[1]
-        text = ('mnli: premise: As of last week he charges $50 an hour minimum instead of $25 for the services of his yearling Northern Utah Legal Aid Foundation. hypothesis: His charges went up last week.',)
+        text = ('mnli: premise: As of last week he charges $50 an hour minimum instead of $25 for the services of his yearling Northern Utah Legal Aid Foundation. hypothesis: His charges went down last week.',)
         input_ = tokenizer1.batch_encode_plus(
             text,
             max_length=128,
