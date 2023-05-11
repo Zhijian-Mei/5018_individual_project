@@ -100,13 +100,14 @@ if __name__ == '__main__':
 
         outputs1 = model1.generate(**input_,do_sample=False)
         output_texts = tokenizer1.batch_decode(outputs1, skip_special_tokens=True)
-        label = list(map(f, output_texts))
-        print(label)
-        quit()
+        model1_label = list(map(f, output_texts))
+        print(model1_label)
+
         logits = model2(input_)
-        preds = torch.argmax(logits, dim=1).cpu()
-        print(labels)
-        print(preds)
+        model2_label = torch.argmax(logits, dim=1).cpu()
+
+        print(model2_label)
+        print(list(output))
         quit()
         # predicts.extend(output_texts)
         # print(output_texts)
