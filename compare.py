@@ -72,7 +72,7 @@ if __name__ == '__main__':
     config = BertConfig.from_pretrained('bert-base-uncased')
     bert = BertModel.from_pretrained('bert-base-uncased').to(device)
     model2 = MyModel(bert, config).to(device)
-    checkpoint = torch.load(f'checkpoint/best_bert-base-uncased_epoch0_0.82_c_0.pt')
+    checkpoint = torch.load(f'checkpoint/bert-base-uncased_0.82_epoch3_c_0.pt')
     model2.load_state_dict(checkpoint['model'])
 
     def f(x):
