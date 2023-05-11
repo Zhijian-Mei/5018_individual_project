@@ -104,10 +104,10 @@ if __name__ == '__main__':
         print(model1_label)
 
         logits = model2(input_)
-        model2_label = torch.argmax(logits, dim=1).cpu()
+        model2_label = torch.argmax(logits, dim=1).cpu().tolist()
 
         print(model2_label)
-        print(list(output))
+        print(list(map(f, output)))
         quit()
         # predicts.extend(output_texts)
         # print(output_texts)
