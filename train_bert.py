@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     epoch = 5
     global_step = 0
+    best_accuracy = -np.inf
     loss_fn = nn.CrossEntropyLoss()
     for e in range(epoch):
         model.train()
@@ -95,7 +96,7 @@ if __name__ == '__main__':
         model.eval()
         predicts = []
         labels = []
-        best_accuracy = -np.inf
+
         for i in tqdm(eval_loader,
                       mininterval=200
                       ):
