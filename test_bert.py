@@ -17,6 +17,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
+    parser.add_argument('-ckpt', type=str,required=True)
     args = parser.parse_args()
     return args
 
@@ -73,8 +74,8 @@ if __name__ == '__main__':
     ).to(device)
 
     ## load fine-tuned checkpoint
-
-    checkpoint = torch.load('checkpoint/best_t5-small_epoch0_0.33_g_1.pt')123123
+    path_to_ckpt = args.ckpt
+    checkpoint = torch.load(f'checkpoint/{path_to_ckpt}')
     model.load_state_dict(checkpoint['model'])
 
     predicts = []
@@ -98,7 +99,7 @@ if __name__ == '__main__':
 
         input_ = tokenizer.batch_encode_plus(
             text,
-            max_length=256,
+            max_length=128,
             pad_to_max_length=True,
             truncation=True,
             padding="max_length",
@@ -125,7 +126,7 @@ if __name__ == '__main__':
 
         input_ = tokenizer.batch_encode_plus(
             text,
-            max_length=256,
+            max_length=128,
             pad_to_max_length=True,
             truncation=True,
             padding="max_length",
