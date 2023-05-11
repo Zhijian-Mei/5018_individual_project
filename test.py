@@ -16,6 +16,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
+    parser.add_argument('-ckpt', type=str,required=True)
     args = parser.parse_args()
     return args
 
@@ -67,8 +68,8 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained(model_name).to(device)
 
     ## load fine-tuned checkpoint
-
-    checkpoint = torch.load('../best_t5-small_epoch1_0.83_g_0.pt')
+    path_to_ckpt = args.ckpt
+    checkpoint = torch.load(f'checkpoint/{path_to_ckpt}')
     model.load_state_dict(checkpoint['model'])
 
     predicts = []
