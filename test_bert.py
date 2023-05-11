@@ -107,7 +107,7 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        logits, loss = model(input_, labels=output)
+        logits = model(input_)
 
         preds = torch.argmax(logits, dim=1).cpu()
 
@@ -134,7 +134,7 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        logits, loss = model(input_, labels=output)
+        logits = model(input_)
 
         preds = torch.argmax(logits, dim=1).cpu()
 
