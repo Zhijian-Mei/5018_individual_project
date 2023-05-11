@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
         preds = torch.argmax(logits, dim=1).cpu()
 
-        labels.extend(output.tolist())
+        labels.extend(list(output))
         predicts.extend(preds.tolist())
 
     labels = list(map(f, labels))
@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
         preds = torch.argmax(logits, dim=1).cpu()
 
-        labels.extend(output.tolist())
+        labels.extend(list(output))
         predicts.extend(preds.tolist())
 
     labels = list(map(f, labels))
