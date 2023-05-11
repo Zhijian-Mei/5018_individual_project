@@ -102,6 +102,14 @@ if __name__ == '__main__':
         output_texts = tokenizer1.batch_decode(outputs1, skip_special_tokens=True)
         model1_label = list(map(f, output_texts))
 
+        input_ = tokenizer2.batch_encode_plus(
+            text,
+            max_length=128,
+            pad_to_max_length=True,
+            truncation=True,
+            padding="max_length",
+            return_tensors="pt",
+        ).to(device)
 
         logits = model2(input_)
         model2_label = torch.argmax(logits, dim=1).cpu().tolist()
