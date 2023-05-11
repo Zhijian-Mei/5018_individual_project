@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=2)
+    parser.add_argument('-batch_size', type=int, default=32)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='c')
     parser.add_argument('-prompt', type=int, default=0)
