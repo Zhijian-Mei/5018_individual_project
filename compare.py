@@ -24,7 +24,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    device = torch.device('cpu')
+    device = torch.device('cuda:4')
 
     model_name = 't5-small'
     print(f'Backbone model name: {model_name}')
