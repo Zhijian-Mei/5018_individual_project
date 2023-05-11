@@ -5,11 +5,11 @@ import torch
 from torch import nn, cuda
 from tqdm import tqdm
 from transformers import AutoTokenizer, T5ForConditionalGeneration, BertModel, T5Config, BertTokenizer, \
-    BertForSequenceClassification
+    BertForSequenceClassification, BertConfig
 import jsonlines
 from data_util import *
 from sklearn.metrics import accuracy_score
-
+from model import *
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -20,6 +20,8 @@ def get_args():
     parser.add_argument('-ckpt', type=str,required=True)
     args = parser.parse_args()
     return args
+
+
 
 
 if __name__ == '__main__':
@@ -66,12 +68,11 @@ if __name__ == '__main__':
     mismatched_dataLoader = DataLoader(mismatched_dataset, batch_size=args.batch_size)
 
     tokenizer = BertTokenizer.from_pretrained(model_name)
-    model = BertForSequenceClassification.from_pretrained(
-        model_name,
-        num_labels=3,
-        output_attentions=False,
-        output_hidden_states=False,
-    ).to(device)
+    config = BertConfig.from_pretrained(model_name)
+    bert = BertModel.from_pretrained(model_name).to(device)
+    model = MyModel(bert, config).to(device)
+
+
 
     ## load fine-tuned checkpoint
     path_to_ckpt = args.ckpt
