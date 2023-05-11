@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     for i in tqdm(matched_dataLoader):
         text, output = i[0], i[1]
-
+        text = ('mnli: premise: As of last week he charges $50 an hour minimum instead of $25 for the services of his yearling Northern Utah Legal Aid Foundation. hypothesis: His charges went up last week.',)
         input_ = tokenizer1.batch_encode_plus(
             text,
             max_length=128,
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         print('t5-small prediction: ',model1_label)
         print('bert-base prediction: ',model2_label)
         print('golden_label: ',list(map(f, output)))
-
+        quit()
         # predicts.extend(output_texts)
         # print(output_texts)
         # print(output)
