@@ -16,7 +16,7 @@ def get_args():
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
-    parser.add_argument('-ckpt', type=str,required=True)
+    # parser.add_argument('-ckpt', type=str,required=True)
     args = parser.parse_args()
     return args
 
