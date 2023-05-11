@@ -107,8 +107,8 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-        logits = outputs.logits
+        logits, loss = model(input_, labels=output)
+
         preds = torch.argmax(logits, dim=1).cpu()
 
         labels.extend(output.tolist())
@@ -134,8 +134,8 @@ if __name__ == '__main__':
             return_tensors="pt",
         ).to(device)
 
-        outputs = model(input_ids=input_.input_ids, attention_mask=input_.attention_mask)
-        logits = outputs.logits
+        logits, loss = model(input_, labels=output)
+
         preds = torch.argmax(logits, dim=1).cpu()
 
         labels.extend(output.tolist())

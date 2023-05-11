@@ -37,9 +37,6 @@ if __name__ == '__main__':
     # model = BertForSequenceClassification.from_pretrained(model_name,num_labels = 3).to(device)
     bert = BertModel.from_pretrained(model_name).to(device)
 
-    for param in bert.parameters():
-        param.required_grad = False
-
     model = MyModel(bert, config).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
