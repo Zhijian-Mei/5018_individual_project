@@ -109,14 +109,14 @@ if __name__ == '__main__':
         print('t5-small prediction: ',model1_label)
         print('bert-base prediction: ',model2_label)
         print('golden_label: ',list(map(f, output)))
-        quit()
+
         # predicts.extend(output_texts)
         # print(output_texts)
         # print(output)
         # print(list(map(f, output_texts)))
         # print(list(map(f, output)))
 
-
+    quit()
     labels = list(map(f, labels))
     predicts = list(map(f, predicts))
 
