@@ -12,7 +12,7 @@ from model import *
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=2)
+    parser.add_argument('-batch_size', type=int, default=1)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
@@ -24,7 +24,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    device = torch.device('cuda:4')
+    device = torch.device('cpu')
 
     model_name = 't5-small'
     print(f'Backbone model name: {model_name}')
@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
         logits = model2(input_)
         model2_label = torch.argmax(logits, dim=1).cpu().tolist()
-
+        print(text)
         print('t5-small prediction: ',model1_label)
         print('bert-base prediction: ',model2_label)
         print('golden_label: ',list(map(f, output)))
