@@ -12,7 +12,7 @@ from model import *
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-batch_size', type=int, default=1)
+    parser.add_argument('-batch_size', type=int, default=2)
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-mode', type=str, default='g')
     parser.add_argument('-prompt', type=int, default=0)
@@ -87,14 +87,22 @@ if __name__ == '__main__':
 
 
     for i in tqdm(matched_dataLoader):
-        text, output = list(i[0]), i[1]
-        print(text)
-        input_ = tokenizer1.encode(text).to(device)
+        text, output = i[0], i[1]
+
+        input_ = tokenizer1.batch_encode_plus(
+            text,
+            max_length=128,
+            pad_to_max_length=True,
+            truncation=True,
+            padding="max_length",
+            return_tensors="pt",
+        ).to(device)
 
         outputs1 = model1.generate(**input_,do_sample=False)
-        output_texts = tokenizer1.decode(outputs1, skip_special_tokens=True)
+        output_texts = tokenizer1.batch_decode(outputs1, skip_special_tokens=True)
         label = list(map(f, output_texts))
-
+        print(label)
+        quit()
         logits = model2(input_)
         preds = torch.argmax(logits, dim=1).cpu()
         print(labels)
