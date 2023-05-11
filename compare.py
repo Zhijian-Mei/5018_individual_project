@@ -88,7 +88,8 @@ if __name__ == '__main__':
 
     for i in tqdm(matched_dataLoader):
         text, output = i[0], i[1]
-
+        print(text)
+        
         labels.extend(list(output))
         input_ = tokenizer1.encode(
             text,
